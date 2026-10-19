@@ -1,0 +1,59 @@
+---
+// Horizontal strokes of moonlight on the water, widening toward the viewer.
+const strokes = Array.from({ length: 14 }, (_, index) => ({
+	width: 12 + index * 6 + (index % 3) * 9,
+	offset: ((index * 37) % 5) * 3 - 6,
+	delay: (index * 0.37) % 1.6,
+}));
+---
+
+<div class="moon-reflection" aria-hidden="true">
+	{
+		strokes.map((stroke) => (
+			<span style={`--width:${stroke.width}px;--offset:${stroke.offset}px;--delay:${stroke.delay}s`} />
+		))
+	}
+</div>
+
+<style>
+	.moon-reflection {
+		position: absolute;
+		right: 14%;
+		bottom: 6%;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: 9px;
+		width: calc(24 * var(--dot));
+		pointer-events: none;
+	}
+
+	.moon-reflection span {
+		width: var(--width);
+		height: 3px;
+		background: var(--moon);
+		translate: var(--offset) 0;
+		animation: shimmer 1.6s steps(1) var(--delay) infinite;
+	}
+
+	@keyframes shimmer {
+		0%,
+		100% {
+			opacity: 0.9;
+		}
+		33% {
+			opacity: 0.35;
+			translate: calc(var(--offset) + 3px) 0;
+		}
+		66% {
+			opacity: 0.65;
+			translate: calc(var(--offset) - 3px) 0;
+		}
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.moon-reflection span {
+			animation: none;
+		}
+	}
+</style>

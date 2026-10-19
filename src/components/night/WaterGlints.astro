@@ -1,0 +1,76 @@
+---
+interface Props {
+	count?: number;
+}
+
+const { count = 48 } = Astro.props;
+
+// Seeded so the glints stay put across renders.
+let state = 1102;
+const random = () => {
+	state = (state * 1664525 + 1013904223) % 4294967296;
+	return state / 4294967296;
+};
+
+const glints = Array.from({ length: count }, () => ({
+	x: random() * 100,
+	y: random() * 100,
+	width: 9 + Math.floor(random() * 4) * 9,
+	delay: random() * 5,
+	duration: 2.5 + random() * 3,
+}));
+---
+
+<div class="glints" aria-hidden="true">
+	{
+		glints.map((glint) => (
+			<span
+				style={`left:${glint.x.toFixed(1)}%;top:${glint.y.toFixed(1)}%;--width:${glint.width}px;--delay:${glint.delay.toFixed(1)}s;--duration:${glint.duration.toFixed(1)}s`}
+			/>
+		))
+	}
+</div>
+
+<style>
+	.glints {
+		/* Spans the full viewport even when placed inside a centered column. */
+		position: absolute;
+		top: 0;
+		bottom: 0;
+		left: calc(50% - 50vw);
+		width: 100vw;
+		overflow: hidden;
+		pointer-events: none;
+	}
+
+	.glints span {
+		position: absolute;
+		width: var(--width);
+		height: 3px;
+		background: var(--moon);
+		opacity: 0;
+		animation: glint var(--duration) steps(1) var(--delay) infinite;
+	}
+
+	@keyframes glint {
+		0%,
+		60%,
+		100% {
+			opacity: 0;
+		}
+		70% {
+			opacity: 0.5;
+		}
+		80% {
+			opacity: 0.2;
+			translate: 3px 0;
+		}
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.glints span {
+			animation: none;
+			opacity: 0.2;
+		}
+	}
+</style>
