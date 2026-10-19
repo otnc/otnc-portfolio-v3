@@ -1,0 +1,36 @@
+# Builds and deploys to Cloudflare Pages on every push to main.
+# The Pages project was created by direct upload, so it cannot use Cloudflare's Git integration.
+# Requires the repository secret CLOUDFLARE_API_TOKEN (Account > Cloudflare Pages > Edit)
+# and the repository variable CLOUDFLARE_ACCOUNT_ID.
+name: Deploy
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: deploy
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+
+      - run: npm ci
+
+      # `deploy` runs the build first, and the build regenerates the font subsets.
+      - run: npm run deploy
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ vars.CLOUDFLARE_ACCOUNT_ID }}
