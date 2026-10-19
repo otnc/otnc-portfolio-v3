@@ -14,7 +14,7 @@ Node.js は 22.12 以上が必要です (Astro 7 の要件)。
 
 `main` にプッシュすると、GitHub Actions ([.github/workflows/deploy.yml](../.github/workflows/deploy.yml)) がビルドして、Cloudflare の `devuloper` アカウントにある Pages プロジェクト `otnc-portfolio` にデプロイします。プロジェクトがまだなければ、最初の実行で作ります。
 
-Pages プロジェクトは wrangler の直接アップロードで作ったため、Cloudflare 側の Git 連携には切り替えられません。そのため Actions から `wrangler pages deploy` を呼んでいます。
+Pages プロジェクトは直接アップロード型なので、Cloudflare 側の Git 連携は使いません。Actions から `wrangler pages deploy` を呼んでいます。プロジェクトの `pages.dev` のアドレスは `otnc-portfolio-9n7.pages.dev` です。
 
 リポジトリに次の設定が必要です。
 
@@ -40,9 +40,9 @@ Pages プロジェクトは wrangler の直接アップロードで作ったた�
 | `otnc.dev` | `otoneko.cat` に 301 |
 | `www.otnc.dev` | `otoneko.cat` に 301 |
 
-4つとも Pages の Custom domains に登録してあり、DNS は Pages への CNAME です。転送は `src/worker.ts` が Astro より先に行います。`public/_routes.json` でページは全部 Worker を通すので、事前レンダリングしたページも転送されます。静的ファイル (`/_astro/*`、`/pixel/*`、`/fonts/*`) は Worker を通さないため、別ドメインで直接開いた場合は転送されません。
+4つとも Pages の Custom domains に登録してあり、DNS は `otnc-portfolio-9n7.pages.dev` への CNAME です。転送は `src/worker.ts` が Astro より先に行います。`public/_routes.json` でページは全部 Worker を通すので、事前レンダリングしたページも転送されます。静的ファイル (`/_astro/*`、`/pixel/*`、`/fonts/*`) は Worker を通さないため、別ドメインで直接開いた場合は転送されません。
 
-2026-10-20 の切り替えで置き換えた DNS レコードは次の通りです。
+2026-10-20 に、最初は誤って `mofumofupop` アカウントに作ったプロジェクトを `devuloper` に移し、古いプロジェクトは削除しました。最初の切り替えで置き換えた DNS レコードは次の通りです。
 
 - `otoneko.cat` と `www.otoneko.cat`: `A 5.104.86.48` (montblank.fun と同じサーバー)
 - `otnc.dev`: GitHub Pages の `A 185.199.108.153` から `185.199.111.153` の4つ
