@@ -63,6 +63,10 @@ Pages プロジェクトは直接アップロード型なので、Cloudflare 側
 
 生成物 (`public/fonts/pixelmplus/`、`src/styles/pixelmplus.css`) は git 管理外です。
 
+## ライセンス
+
+コードは MIT ([LICENSE](../LICENSE))、文章と自作のドット絵は CC BY 4.0 ([CONTENT-LICENSE.md](../CONTENT-LICENSE.md)) です。アイコンの画像、各サービスのマーク、フォントは対象外です。外部素材の著作権表示は [THIRD-PARTY-NOTICES.md](../THIRD-PARTY-NOTICES.md) にまとめています。
+
 ## 外部素材のライセンス
 
 | 素材 | 使い方 | ライセンス |
