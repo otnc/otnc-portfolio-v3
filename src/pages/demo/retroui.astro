@@ -1,0 +1,9 @@
+---
+export const prerender = true;
+import DemoLayout from '@/layouts/DemoLayout.astro';
+import DemoRetroUI from '@/components/demos/DemoRetroUI';
+---
+
+<DemoLayout title="RetroUI デモ | 音猫｡" slug="retroui">
+	<DemoRetroUI client:load />
+</DemoLayout>

@@ -1,0 +1,369 @@
+---
+export const prerender = true;
+import DemoLayout from '@/layouts/DemoLayout.astro';
+import { DitheredAvatar, OceanBackground } from '@/components/demos/ShaderHero';
+import { accounts, altPersona, profile, supports, works } from '@/data/profile';
+---
+
+<DemoLayout title="自作 CSS + Paper Shaders デモ | 音猫｡" slug="handmade">
+	<header class="hero">
+		<OceanBackground client:only="react" />
+		<div class="hero__inner">
+			<div class="avatar px-box">
+				<DitheredAvatar client:only="react" avatar={profile.avatar} />
+			</div>
+			<p class="hero__reading">{profile.reading} / {profile.handle}</p>
+			<h1>{profile.name}</h1>
+			<p class="hero__tagline">{profile.tagline}<span class="caret" aria-hidden="true">_</span></p>
+		</div>
+	</header>
+
+	<main class="page">
+		<section class="px-box panel">
+			<h2>自己紹介</h2>
+			<p>{profile.bio}</p>
+			<ul class="chips">
+				{profile.roles.map((role) => <li class="chip">{role}</li>)}
+			</ul>
+			<h3>使える言語・技術</h3>
+			<ul class="chips">
+				{profile.skills.map((skill) => <li class="chip chip--ghost">{skill}</li>)}
+			</ul>
+		</section>
+
+		<section>
+			<h2 class="section-title">作品</h2>
+			<div class="works">
+				{
+					works.map((work) => (
+						<a class="px-box work" href={work.url} target="_blank" rel="noreferrer">
+							<span class="work__kind">{work.kind}</span>
+							<strong class="work__name">{work.name}</strong>
+							<span class="work__desc">{work.description}</span>
+							<span class="work__go">ひらく →</span>
+						</a>
+					))
+				}
+			</div>
+		</section>
+
+		<section class="warp px-box">
+			<div class="warp__pipe" aria-hidden="true"></div>
+			<div>
+				<p class="warp__label">もうひとりのわたし</p>
+				<h2>{altPersona.name}</h2>
+				<p>{altPersona.summary}</p>
+				<div class="warp__actions">
+					<a class="btn" href={altPersona.twitter.url} target="_blank" rel="noreferrer">Twitter {altPersona.twitter.handle}</a>
+					<a class="btn btn--light" href={altPersona.site.url} target="_blank" rel="noreferrer">{altPersona.site.label} へ</a>
+				</div>
+			</div>
+		</section>
+
+		<section class="two">
+			<div class="px-box panel">
+				<h2>アカウント</h2>
+				<ul class="links">
+					{accounts.map((account) => <li><a href={account.url} target="_blank" rel="noreferrer"><span>{account.label}</span><span class="muted">{account.handle}</span></a></li>)}
+				</ul>
+			</div>
+			<div class="px-box panel">
+				<h2>支援</h2>
+				<ul class="links">
+					{supports.map((support) => <li><a href={support.url} target="_blank" rel="noreferrer"><span>{support.label}</span></a></li>)}
+				</ul>
+			</div>
+		</section>
+
+		<section>
+			<h2 class="section-title">コミュニティ</h2>
+			<ul class="links community">
+				{profile.communities.map((community) => <li class="px-box">{community.url ? <a href={community.url} target="_blank" rel="noreferrer"><span>{community.name}</span><span class="muted">{community.role}</span></a> : <span class="static"><span>{community.name}</span><span class="muted">{community.role}</span></span>}</li>)}
+			</ul>
+		</section>
+	</main>
+</DemoLayout>
+
+<style is:global>
+	:root {
+		--sea: #0b1530;
+		--sea-2: #13234d;
+		--cyan: #5ee1ff;
+		--cream: #fff6d5;
+		--pink: #ff7eb6;
+		--px: 4px;
+	}
+
+	body {
+		margin: 0;
+		background: var(--sea);
+		color: var(--cream);
+		font-family: 'DotGothic16', system-ui, sans-serif;
+		line-height: 1.8;
+	}
+
+	/* Stepped corners drawn with four flat shadows, plus a hard drop shadow. */
+	.px-box {
+		position: relative;
+		background: var(--sea-2);
+		box-shadow:
+			0 calc(var(--px) * -1) 0 0 var(--cream),
+			0 var(--px) 0 0 var(--cream),
+			calc(var(--px) * -1) 0 0 0 var(--cream),
+			var(--px) 0 0 0 var(--cream),
+			calc(var(--px) * 2) calc(var(--px) * 2) 0 0 #000;
+		margin: var(--px);
+	}
+
+	.hero {
+		position: relative;
+		display: grid;
+		place-items: center;
+		min-height: 78vh;
+		overflow: hidden;
+		text-align: center;
+	}
+
+	.hero__inner {
+		position: relative;
+		padding: 48px 16px;
+	}
+
+	.avatar {
+		width: 160px;
+		height: 160px;
+		margin: 0 auto 24px;
+		overflow: hidden;
+	}
+
+	.hero h1 {
+		margin: 0;
+		font-family: 'DotGothic16', sans-serif;
+		font-size: clamp(48px, 10vw, 96px);
+		line-height: 1.1;
+		text-shadow: 6px 6px 0 #000;
+	}
+
+	.hero__reading {
+		margin: 0;
+		color: var(--cyan);
+		font-family: 'Press Start 2P', monospace;
+		font-size: 12px;
+	}
+
+	.hero__tagline {
+		display: inline-block;
+		margin-top: 16px;
+		padding: 4px 12px;
+		background: #000a;
+	}
+
+	.caret {
+		animation: blink 1s steps(1) infinite;
+	}
+
+	@keyframes blink {
+		50% {
+			opacity: 0;
+		}
+	}
+
+	.page {
+		display: flex;
+		flex-direction: column;
+		gap: 48px;
+		max-width: 920px;
+		margin: 0 auto;
+		padding: 56px 16px 80px;
+	}
+
+	.panel {
+		padding: 24px;
+	}
+
+	.page h2 {
+		margin: 0 0 12px;
+		font-size: 24px;
+	}
+
+	.page h3 {
+		margin: 24px 0 8px;
+		font-size: 16px;
+		color: var(--cyan);
+	}
+
+	.section-title::before {
+		content: '■ ';
+		color: var(--pink);
+	}
+
+	.chips {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 8px;
+		margin: 0;
+		padding: 0;
+		list-style: none;
+	}
+
+	.chip {
+		padding: 0 10px;
+		background: var(--cyan);
+		color: var(--sea);
+	}
+
+	.chip--ghost {
+		background: transparent;
+		color: var(--cream);
+		outline: 2px dashed var(--cream);
+		outline-offset: -2px;
+	}
+
+	.works {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+		gap: 28px;
+	}
+
+	.work {
+		display: flex;
+		flex-direction: column;
+		gap: 6px;
+		padding: 20px;
+		color: inherit;
+		text-decoration: none;
+		transition: transform 0.2s steps(3);
+	}
+
+	.work:hover,
+	.work:focus-visible {
+		transform: translate(-4px, -4px);
+		background: #1b3170;
+	}
+
+	.work__kind {
+		align-self: flex-start;
+		padding: 0 6px;
+		background: var(--pink);
+		color: var(--sea);
+		font-size: 13px;
+	}
+
+	.work__name {
+		font-size: 20px;
+	}
+
+	.work__desc {
+		flex: 1;
+		font-size: 15px;
+	}
+
+	.work__go {
+		color: var(--cyan);
+	}
+
+	.warp {
+		display: flex;
+		gap: 24px;
+		align-items: center;
+		padding: 28px;
+		background: #1f5c2e;
+	}
+
+	.warp__pipe {
+		flex: none;
+		width: 72px;
+		height: 96px;
+		background:
+			linear-gradient(#000, #000) 0 0 / 100% 4px no-repeat,
+			linear-gradient(90deg, #2e8b3a 0 20%, #7ee07a 20% 40%, #2e8b3a 40% 100%);
+		box-shadow: 0 0 0 4px #000;
+		animation: bob 1.2s steps(2) infinite;
+	}
+
+	@keyframes bob {
+		50% {
+			transform: translateY(-6px);
+		}
+	}
+
+	.warp__label {
+		margin: 0;
+		color: #b8ffb0;
+		font-size: 13px;
+	}
+
+	.warp__actions {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 16px;
+		margin-top: 12px;
+	}
+
+	.btn {
+		padding: 6px 14px;
+		background: var(--pink);
+		color: var(--sea);
+		text-decoration: none;
+		box-shadow: 4px 4px 0 #000;
+		transition: transform 0.1s steps(2);
+	}
+
+	.btn--light {
+		background: var(--cream);
+	}
+
+	.btn:active {
+		transform: translate(4px, 4px);
+		box-shadow: none;
+	}
+
+	.two {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+		gap: 28px;
+	}
+
+	.links {
+		display: grid;
+		gap: 8px;
+		margin: 0;
+		padding: 0;
+		list-style: none;
+	}
+
+	.links a,
+	.links .static {
+		display: flex;
+		justify-content: space-between;
+		gap: 12px;
+		padding: 4px 8px;
+		color: inherit;
+		text-decoration: none;
+	}
+
+	.links a:hover {
+		background: var(--cream);
+		color: var(--sea);
+	}
+
+	.community {
+		grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+		gap: 24px;
+	}
+
+	.community li {
+		padding: 12px;
+	}
+
+	.muted {
+		opacity: 0.7;
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.caret,
+		.warp__pipe {
+			animation: none;
+		}
+	}
+</style>
