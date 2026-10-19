@@ -1,0 +1,402 @@
+---
+// The beach at night. Built from two references:
+// - Godot "Pixel Water": flat depth bands joined by dithering, waves travel in from open water and fade at the beach.
+// - Slynyrd Pixelblog 10: crests steeper than troughs, short linear sparkle loops placed where the light falls.
+// Every sprite uses the shared 3px dot (--dot in night.css).
+
+// Moon sparkles sit only in the column under the moon, which hangs at the same horizontal spot in the hero.
+const sparkles = [
+	{ top: 18, left: 6, width: 9, delay: 0 },
+	{ top: 33, left: 30, width: 15, delay: 0.5 },
+	{ top: 51, left: 12, width: 12, delay: 1.0 },
+	{ top: 66, left: 42, width: 18, delay: 0.25 },
+	{ top: 84, left: 0, width: 21, delay: 0.75 },
+	{ top: 99, left: 27, width: 24, delay: 1.25 },
+];
+---
+
+<div class="shore" aria-hidden="true">
+	<div class="shore__sea">
+		<div class="shore__band shore__band--mid">
+			<span class="pixel-edge pixel-edge--b pixel-edge--drift"></span>
+		</div>
+		<div class="shore__band shore__band--shallow">
+			<span class="pixel-edge pixel-edge--drift"></span>
+		</div>
+		<div class="shore__sparkles">
+			{sparkles.map((s) => <span style={`top:${s.top}px;left:${s.left}px;width:${s.width}px;animation-delay:${s.delay}s`} />)}
+		</div>
+		<span class="shore__wavelet"></span>
+		<span class="shore__wavelet"></span>
+		<span class="shore__wavelet"></span>
+	</div>
+	<div class="shore__sand">
+		<div class="shore__wet">
+			<span class="pixel-edge pixel-edge--b pixel-edge--down shore__wet-edge"></span>
+			<span class="shore__moon-on-sand"></span>
+		</div>
+		<span class="pixel-edge pixel-edge--line-b pixel-edge--down shore__foam-line"></span>
+		<span class="shore__item shore__item--shell" style="left:18%;top:72px"></span>
+		<span class="shore__item shore__item--starfish" style="left:66%;top:96px"></span>
+		<span class="shore__item shore__item--shell" style="left:44%;top:111px"></span>
+		<span class="shore__crab"></span>
+	</div>
+	<div class="shore__fill"></div>
+	<div class="shore__swash">
+		<div class="shore__crest"></div>
+		<span class="pixel-edge pixel-edge--b pixel-edge--down shore__sheet-foam"></span>
+		<span class="pixel-edge pixel-edge--b pixel-edge--down shore__sheet-edge"></span>
+	</div>
+</div>
+
+<style>
+	.shore {
+		--sea-top: 120px;
+		--swash-reach: 45px;
+		--deep: #173070;
+		--mid: #1c3a86;
+		--shallow: #22449a;
+		--sheet: #2a52ad;
+		position: relative;
+		height: 270px;
+		overflow: hidden;
+	}
+
+	/* 3px checkerboard used to blend one depth band into the next. */
+	.shore__sea {
+		position: absolute;
+		inset: 0 0 auto;
+		height: var(--sea-top);
+		background: var(--deep);
+	}
+
+	.shore__band {
+		position: absolute;
+		left: 0;
+		right: 0;
+		bottom: 0;
+	}
+
+	/* Each band's top edge undulates and drifts slowly, like the water surface between depths. */
+	.shore__band .pixel-edge {
+		--edge-color: var(--band);
+		bottom: calc(100% - 6px);
+	}
+
+	.shore__band--mid {
+		--band: var(--mid);
+		height: 78px;
+		background: var(--band);
+	}
+
+	.shore__band--shallow {
+		--band: var(--shallow);
+		height: 36px;
+		background: var(--band);
+	}
+
+	.shore__sparkles {
+		position: absolute;
+		top: 0;
+		right: 14%;
+		width: 72px;
+		height: 100%;
+	}
+
+	.shore__sparkles span {
+		position: absolute;
+		height: 3px;
+		background: var(--moon);
+		opacity: 0;
+		animation: sparkle 1.5s steps(1) infinite;
+	}
+
+	/* Six-frame loop: flicker on, slide a dot, fade. */
+	@keyframes sparkle {
+		0% {
+			opacity: 0.9;
+		}
+		16% {
+			opacity: 0.5;
+			translate: 3px 0;
+		}
+		33% {
+			opacity: 0.8;
+			translate: 6px 0;
+		}
+		50% {
+			opacity: 0.25;
+			translate: 6px 0;
+		}
+		66%,
+		100% {
+			opacity: 0;
+		}
+	}
+
+	/* Wavelets roll in from the horizon toward the beach, brightening as they near it, then dissolve. */
+	.shore__wavelet {
+		position: absolute;
+		left: -96px;
+		right: -96px;
+		top: 0;
+		height: 6px;
+		background: url('/pixel/wavelet.svg') 0 0 / 192px 6px repeat-x;
+		opacity: 0;
+		animation: wavelet 6s steps(18) infinite;
+	}
+
+	.shore__wavelet:nth-of-type(2) {
+		animation-delay: 2s;
+		background-position-x: -60px;
+	}
+
+	.shore__wavelet:nth-of-type(3) {
+		animation-delay: 4s;
+		background-position-x: -132px;
+	}
+
+	@keyframes wavelet {
+		0% {
+			translate: 0 0;
+			opacity: 0.15;
+		}
+		70% {
+			opacity: 0.7;
+		}
+		90% {
+			translate: 18px 102px;
+			opacity: 0.9;
+		}
+		100% {
+			translate: 18px 108px;
+			opacity: 0;
+		}
+	}
+
+	.shore__sand {
+		position: absolute;
+		inset: var(--sea-top) 0 0;
+		background-color: var(--sand);
+		background-image:
+			radial-gradient(var(--sand-dark) 1.5px, transparent 1.5px),
+			radial-gradient(var(--sand-light) 1.5px, transparent 1.5px);
+		background-size: 12px 12px;
+		background-position:
+			0 0,
+			6px 6px;
+	}
+
+	/*
+	 * Wave cycle (6s): the sheet of water runs up the sand until 40%, rests until 50%, then slides back.
+	 * The wet sand shares the sheet's wavy edge (same mask, same position at full reach), turns dark the
+	 * moment the water covers it, and dries in steps while the water is away. The gloss fades sooner,
+	 * and a line of foam is left at the high-water mark.
+	 */
+	.shore__wet {
+		position: absolute;
+		inset: 0 0 auto;
+		height: calc(var(--swash-reach) + 18px);
+		background-color: var(--sand-wet);
+		background-image: radial-gradient(#1b1930 1.5px, transparent 1.5px);
+		background-size: 6px 6px;
+		animation: wet 6s steps(8) infinite;
+	}
+
+	/* The jump to fully wet happens at 40%, while the water still covers this area, so it is never seen. */
+	@keyframes wet {
+		0%,
+		39% {
+			opacity: 0.35;
+		}
+		40%,
+		55% {
+			opacity: 1;
+		}
+		100% {
+			opacity: 0.35;
+		}
+	}
+
+	.shore__wet-edge {
+		--edge-color: var(--sand-wet);
+		top: calc(100% - 6px);
+	}
+
+	.shore__moon-on-sand {
+		position: absolute;
+		top: 9px;
+		right: 14%;
+		width: 72px;
+		height: 36px;
+		background: repeating-linear-gradient(var(--moon) 0 3px, transparent 3px 12px);
+		animation: gloss 6s steps(6) infinite;
+	}
+
+	@keyframes gloss {
+		0%,
+		39% {
+			opacity: 0;
+		}
+		40%,
+		55% {
+			opacity: 0.5;
+		}
+		75%,
+		100% {
+			opacity: 0;
+		}
+	}
+
+	.shore__foam-line {
+		--edge-color: #c9d4f5;
+		top: calc(var(--swash-reach) + 12px);
+		animation: foam-line 6s steps(6) infinite;
+	}
+
+	@keyframes foam-line {
+		0%,
+		44% {
+			opacity: 0;
+		}
+		45% {
+			opacity: 0.8;
+		}
+		80% {
+			opacity: 0.25;
+		}
+		100% {
+			opacity: 0;
+		}
+	}
+
+	/* The breaking wave: runs up the sand, pauses, then slides back. */
+	.shore__swash {
+		position: absolute;
+		left: 0;
+		right: 0;
+		top: calc(var(--sea-top) - 36px);
+		height: 54px;
+		/* Shallow water behind the lip, then the thin sheet that runs up the sand. */
+		background: linear-gradient(var(--shallow) 0 36px, var(--sheet) 36px 100%);
+		animation: swash 6s steps(12) infinite;
+	}
+
+	/* The sheet's leading edge, with a dot of foam outlining it. */
+	.shore__sheet-edge {
+		--edge-color: var(--sheet);
+		top: calc(100% - 6px);
+	}
+
+	.shore__sheet-foam {
+		--edge-color: #c9d4f5;
+		top: calc(100% - 3px);
+	}
+
+	/* Grows with the wave so no sand shows between the shallows and the wave while it runs up the beach. */
+	.shore__fill {
+		position: absolute;
+		left: 0;
+		right: 0;
+		top: calc(var(--sea-top) - 36px);
+		height: var(--swash-reach);
+		background: var(--shallow);
+		transform-origin: top;
+		animation: fill 6s steps(12) infinite;
+	}
+
+	@keyframes fill {
+		0%,
+		100% {
+			transform: scaleY(0);
+		}
+		40%,
+		50% {
+			transform: scaleY(1);
+		}
+	}
+
+	.shore__crest {
+		position: absolute;
+		left: -192px;
+		right: -192px;
+		top: 0;
+		height: 36px;
+		background: url('/pixel/wave-front.svg') 0 0 / 192px 36px repeat-x;
+		animation: drift 8s steps(16) infinite;
+	}
+
+	@keyframes drift {
+		to {
+			translate: 192px 0;
+		}
+	}
+
+	@keyframes swash {
+		0%,
+		100% {
+			translate: 0 0;
+		}
+		40%,
+		50% {
+			translate: 0 var(--swash-reach);
+		}
+	}
+
+	.shore__item {
+		position: absolute;
+		background-size: 100% 100%;
+	}
+
+	.shore__item--shell {
+		width: 21px;
+		height: 15px;
+		background-image: url('/pixel/shell.svg');
+	}
+
+	.shore__item--starfish {
+		width: 21px;
+		height: 21px;
+		background-image: url('/pixel/starfish.svg');
+	}
+
+	/* Two-frame sprite sheet: 16x10 dots per frame. */
+	.shore__crab {
+		position: absolute;
+		top: 87px;
+		left: 0;
+		width: 48px;
+		height: 30px;
+		background: url('/pixel/crab.svg') 0 0 / 96px 30px no-repeat;
+		animation:
+			crab-walk 0.45s steps(2) infinite,
+			crab-cross 45s steps(180) infinite;
+	}
+
+	@keyframes crab-walk {
+		to {
+			background-position: -96px 0;
+		}
+	}
+
+	@keyframes crab-cross {
+		from {
+			translate: -60px 0;
+		}
+		to {
+			translate: calc(100vw + 60px) 0;
+		}
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.shore *,
+		.shore *::before {
+			animation: none;
+		}
+
+		.shore__wavelet,
+		.shore__foam-line {
+			display: none;
+		}
+	}
+</style>
