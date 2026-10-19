@@ -7,7 +7,8 @@ import cloudflarePages from 'astro-adapter-cloudflare-pages';
 export default defineConfig({
 	site: 'https://otoneko.cat',
 	output: 'server',
-	adapter: cloudflarePages(),
+	// The custom entry redirects alternate hostnames; public/_routes.json sends every page (not static files) through it.
+	adapter: cloudflarePages({ workerEntryPoint: './src/worker.ts' }),
 	integrations: [react()],
 	vite: {
 		plugins: [tailwindcss()],
