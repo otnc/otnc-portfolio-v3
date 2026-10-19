@@ -1,0 +1,34 @@
+---
+import AboutWindow from '@/components/night/AboutWindow.astro';
+import BottleMail from '@/components/night/BottleMail.astro';
+import Hero from '@/components/night/Hero.astro';
+import LinksWindow from '@/components/night/LinksWindow.astro';
+import Marquee from '@/components/night/Marquee.astro';
+import WaterGlints from '@/components/night/WaterGlints.astro';
+import WorksWindow from '@/components/night/WorksWindow.astro';
+import NightLayout from '@/layouts/NightLayout.astro';
+import { profile } from '@/data/profile';
+import { fetchPinnedWorks } from '@/lib/github';
+
+// Optional Pages secret; without it the GitHub API is called unauthenticated (60 requests/hour per IP).
+const githubToken = Astro.locals.runtime?.env?.GITHUB_TOKEN;
+const works = await fetchPinnedWorks(profile.handle, githubToken);
+---
+
+<NightLayout lang="ja" path="/" title={`${profile.nameLatin} (${profile.name})`} description={profile.bio}>
+	<Hero />
+	<Marquee messages={profile.messages} />
+
+	<main id="main" class="page">
+		<WaterGlints />
+		<AboutWindow />
+		<WorksWindow works={works} />
+		<BottleMail />
+		<LinksWindow />
+	</main>
+
+	<Fragment slot="footer-links">
+		<a href="/ca/" hreflang="ca" lang="ca">Català</a>
+		<a href="/demo/">試作デモ一覧</a>
+	</Fragment>
+</NightLayout>
