@@ -18,7 +18,7 @@ const strokes = Array.from({ length: 14 }, (_, index) => ({
 <style>
 	.moon-reflection {
 		position: absolute;
-		right: 14%;
+		right: var(--moon-right);
 		bottom: 6%;
 		display: flex;
 		flex-direction: column;
@@ -48,6 +48,17 @@ const strokes = Array.from({ length: 14 }, (_, index) => ({
 		66% {
 			opacity: 0.65;
 			translate: calc(var(--offset) - 3px) 0;
+		}
+	}
+
+	/* Phones have less room under the moon, so drop the far strokes to keep clear of the hero text. */
+	@media (max-width: 640px) {
+		.moon-reflection {
+			bottom: 2%;
+		}
+
+		.moon-reflection span:nth-child(-n + 6) {
+			display: none;
 		}
 	}
 

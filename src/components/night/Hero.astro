@@ -153,7 +153,16 @@ import { accounts, profile } from '@/data/profile';
 		transform: translateY(-6px);
 	}
 
+	/* On phones the moon sits in the top-right corner, so start the content below it. */
 	@media (max-width: 640px) {
+		.hero {
+			place-items: start center;
+		}
+
+		.hero__inner {
+			padding-top: 120px;
+		}
+
 		.terminal {
 			min-width: 0;
 		}

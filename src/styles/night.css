@@ -30,6 +30,8 @@
 	--sand-wet: #26243a;
 	/* Shared size of one pixel-art dot for icons, sprites, stars and waves. */
 	--dot: 3px;
+	/* Horizontal position of the moon, shared by the sky, its reflection and the beach sparkles. */
+	--moon-right: 14%;
 	--font-body: 'PixelMplus10', 'PixelMplus10 Extra', monospace;
 	--font-heading: 'PixelMplus12', 'PixelMplus12 Extra', monospace;
 	--pixel-corner: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M3 1h1v1h-1zM4 1h1v1h-1zM2 2h1v1h-1zM5 2h1v1h-1zM1 3h1v1h-1zM6 3h1v1h-1zM1 4h1v1h-1zM6 4h1v1h-1zM2 5h1v1h-1zM5 5h1v1h-1zM3 6h1v1h-1zM4 6h1v1h-1z' fill='%23fff6d5'/%3E%3C/svg%3E");
@@ -285,6 +287,10 @@ a:visited {
 }
 
 @media (max-width: 640px) {
+	:root {
+		--moon-right: 16px;
+	}
+
 	h1 {
 		font-size: 36px;
 		line-height: 48px;
