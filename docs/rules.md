@@ -47,6 +47,7 @@
 - Tailwind は使いません。React も、必要になるまで入れません。
 - ページ間で CSS を混ぜません。共通のものは `src/styles/night.css`、部品だけのものは各 `.astro` の `<style>` に置きます。
 - 部品はセクションごとに分け、ページは部品を並べるだけにします。詳しくは [architecture.md](architecture.md) を見てください。
+- Cloudflare は `devuloper` アカウントを使います。ゾーン (otoneko.cat、otnc.dev) も Pages プロジェクトもここです。`mofumofupop` アカウントは mofumofupop の GitHub org 専用なので使いません。
 - 正規のドメインは `otoneko.cat` (www なし) です。`www.otoneko.cat`、`otnc.dev`、`www.otnc.dev` は 301 で `otoneko.cat` に転送します。
 - `/ca/` のカタルーニャ語ページは .cat ドメインの要件のために置いています。消しません。プロフィールの翻訳にはせず、カタルーニャ語と文化の紹介として独立させます。
 

@@ -12,7 +12,7 @@ Node.js は 22.12 以上が必要です (Astro 7 の要件)。
 
 ## デプロイ
 
-`main` にプッシュすると、GitHub Actions ([.github/workflows/deploy.yml](../.github/workflows/deploy.yml)) がビルドして Cloudflare Pages の `otnc-portfolio` プロジェクトにデプロイします。
+`main` にプッシュすると、GitHub Actions ([.github/workflows/deploy.yml](../.github/workflows/deploy.yml)) がビルドして、Cloudflare の `devuloper` アカウントにある Pages プロジェクト `otnc-portfolio` にデプロイします。プロジェクトがまだなければ、最初の実行で作ります。
 
 Pages プロジェクトは wrangler の直接アップロードで作ったため、Cloudflare 側の Git 連携には切り替えられません。そのため Actions から `wrangler pages deploy` を呼んでいます。
 
@@ -20,10 +20,10 @@ Pages プロジェクトは wrangler の直接アップロードで作ったた�
 
 | 種類 | 名前 | 中身 |
 | --- | --- | --- |
-| Secret | `CLOUDFLARE_API_TOKEN` | Cloudflare の API トークン (Account の Cloudflare Pages: Edit) |
-| Variable | `CLOUDFLARE_ACCOUNT_ID` | Cloudflare のアカウント ID |
+| Secret | `CLOUDFLARE_API_TOKEN` | Cloudflare の API トークン (`devuloper` アカウントの Cloudflare Pages: Edit) |
+| Variable | `CLOUDFLARE_ACCOUNT_ID` | `devuloper` のアカウント ID (`48866beebe80d684ef2a7cb5764190a1`) |
 
-手元からデプロイするときは `npm run deploy` です。
+手元からデプロイするときは、`devuloper` にログインした wrangler で `npm run deploy` を実行します。
 
 ## Pages の環境変数
 
