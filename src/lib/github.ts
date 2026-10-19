@@ -1,5 +1,3 @@
-import { works as fallbackWorks } from '@/data/profile';
-
 // GitHub has no official API for pinned repositories, so this uses the same unofficial one as portfolio-v3.
 const PINNED_API_URL = 'https://pinned.berrysauce.dev/get';
 const REPO_API_URL = 'https://api.github.com/repos';
@@ -61,17 +59,14 @@ async function fetchPinnedItems(user: string): Promise<PinnedItem[]> {
 
 /**
  * Pinned repositories of `user` with their GitHub description and homepage.
- * Falls back to the hand-written list in data/profile.ts when the pinned API is unavailable.
+ * Returns an empty list when the pinned API is unavailable, so the page still renders.
  */
 export async function fetchPinnedWorks(user: string, token?: string): Promise<PinnedWork[]> {
 	let items: PinnedItem[];
 	try {
 		items = await fetchPinnedItems(user);
 	} catch {
-		return fallbackWorks.map((work) => {
-			const [owner, name] = work.repo.replace('https://github.com/', '').split('/');
-			return { name, owner, repo: work.repo, description: work.description, homepage: work.url };
-		});
+		return [];
 	}
 
 	return Promise.all(
