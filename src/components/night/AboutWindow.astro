@@ -1,0 +1,44 @@
+---
+import Window from '@/components/night/Window.astro';
+import { profile } from '@/data/profile';
+---
+
+<Window title="about.txt - メモ帳" class="window--left">
+	<h2>自己紹介</h2>
+	<p class="alias">漢字では「{profile.name}」と書きます。</p>
+	<p>{profile.bio}</p>
+	<ul class="tags">
+		{profile.roles.map((role) => <li class="tag">{role}</li>)}
+	</ul>
+	<h3>使える言語・技術</h3>
+	<ul class="tags">
+		{profile.skills.map((skill) => <li class="tag tag--ghost">{skill}</li>)}
+	</ul>
+</Window>
+
+<style>
+	.alias {
+		margin-bottom: 12px;
+		color: var(--muted);
+	}
+
+	.tags {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 8px;
+		margin: 16px 0;
+	}
+
+	.tag {
+		padding: 0 8px;
+		background: var(--cyan);
+		color: var(--ink);
+	}
+
+	.tag--ghost {
+		background: transparent;
+		color: var(--text);
+		outline: 2px dashed var(--muted);
+		outline-offset: -2px;
+	}
+</style>

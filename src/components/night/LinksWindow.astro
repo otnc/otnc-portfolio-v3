@@ -1,0 +1,74 @@
+---
+import Window from '@/components/night/Window.astro';
+import PixelIcon from '@/components/PixelIcon.astro';
+import { accounts, supports } from '@/data/profile';
+---
+
+<Window title="links.html" class="window--left">
+	<h2>アカウント</h2>
+	<ul class="links">
+		{
+			accounts.map((account) => (
+				<li>
+					<a href={account.url} target="_blank" rel="noreferrer">
+						<PixelIcon name={account.icon} />
+						<span>{account.label}</span>
+						<span class="muted links__handle">{account.handle}</span>
+					</a>
+				</li>
+			))
+		}
+	</ul>
+	<h2 class="links-heading">支援</h2>
+	<ul class="links">
+		{
+			supports.map((support) => (
+				<li>
+					<a href={support.url} target="_blank" rel="noreferrer">
+						<span>★ {support.label}</span>
+					</a>
+				</li>
+			))
+		}
+	</ul>
+</Window>
+
+<style>
+	.links-heading {
+		margin-top: 24px;
+	}
+
+	.links {
+		display: grid;
+		gap: 4px;
+		margin-top: 8px;
+	}
+
+	.links a {
+		display: flex;
+		align-items: center;
+		gap: 12px;
+		padding: 0 8px;
+		text-decoration: none;
+	}
+
+	.links a:hover,
+	.links a:focus-visible {
+		background: var(--moon);
+		color: var(--ink);
+	}
+
+	.links a:hover .muted {
+		color: var(--ink);
+	}
+
+	.links__handle {
+		margin-left: auto;
+	}
+
+	@media (max-width: 640px) {
+		.links__handle {
+			display: none;
+		}
+	}
+</style>

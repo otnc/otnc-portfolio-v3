@@ -1,0 +1,117 @@
+---
+import { altPersona } from '@/data/profile';
+---
+
+<section class="bottle" data-reveal>
+	<div class="bottle__water" aria-hidden="true"></div>
+	<svg class="bottle__art" viewBox="0 0 16 24" shape-rendering="crispEdges" aria-hidden="true">
+		<rect x="6" y="0" width="4" height="2" fill="#a0673a" />
+		<rect x="6" y="2" width="4" height="4" fill="#bfe8ff" />
+		<rect x="4" y="6" width="8" height="2" fill="#bfe8ff" />
+		<rect x="3" y="8" width="10" height="14" fill="#9fd7f5" />
+		<rect x="4" y="22" width="8" height="2" fill="#9fd7f5" />
+		<rect x="5" y="10" width="6" height="9" fill="#fff6d5" />
+		<rect x="6" y="12" width="4" height="1" fill="#c9a86a" />
+		<rect x="6" y="14" width="4" height="1" fill="#c9a86a" />
+		<rect x="6" y="16" width="3" height="1" fill="#c9a86a" />
+		<rect x="4" y="9" width="1" height="10" fill="#ffffff" />
+	</svg>
+	<div class="bottle__letter">
+		<p class="bottle__label">{altPersona.topics}</p>
+		<h2>もうひとりのわたし「{altPersona.name}」</h2>
+		<p>{altPersona.summary}</p>
+		<div class="bottle__actions">
+			<a class="pixel-button" href={altPersona.twitter.url} target="_blank" rel="noreferrer">Twitter {altPersona.twitter.handle}</a>
+			<a class="pixel-button pixel-button--moon" href={altPersona.site.url} target="_blank" rel="noreferrer">{altPersona.site.label} へ</a>
+		</div>
+	</div>
+</section>
+
+<style>
+	.bottle {
+		position: relative;
+		display: flex;
+		align-items: center;
+		gap: 32px;
+		padding: 32px 0;
+	}
+
+	.bottle__water {
+		position: absolute;
+		left: -100vw;
+		right: -100vw;
+		top: 50%;
+		height: 3px;
+		background: repeating-linear-gradient(90deg, var(--cyan) 0 18px, transparent 18px 36px);
+		opacity: 0.4;
+		animation: ripple 2s steps(4) infinite;
+	}
+
+	@keyframes ripple {
+		to {
+			translate: 36px 0;
+		}
+	}
+
+	.bottle__art {
+		position: relative;
+		flex: none;
+		width: calc(16 * var(--dot));
+		height: calc(24 * var(--dot));
+		animation: float 2.4s steps(4) infinite;
+	}
+
+	@keyframes float {
+		0%,
+		100% {
+			transform: translateY(0);
+		}
+		50% {
+			transform: translateY(-6px);
+		}
+	}
+
+	.bottle__letter {
+		position: relative;
+		flex: 1;
+		padding: 24px;
+		background: var(--paper);
+		color: var(--ink);
+		border: 5px solid var(--ink);
+		border-image: var(--pixel-corner-ink) 3 / 2 / 2 stretch;
+		background-clip: padding-box;
+		filter: drop-shadow(9px 9px 0 #00000066);
+	}
+
+	.bottle__letter h2 {
+		color: var(--ink);
+	}
+
+	.bottle__label {
+		display: inline-block;
+		padding: 0 8px;
+		background: var(--ink);
+		color: var(--paper);
+	}
+
+	.bottle__actions {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 16px;
+		margin-top: 16px;
+	}
+
+	@media (max-width: 640px) {
+		.bottle {
+			flex-direction: column;
+			align-items: flex-start;
+		}
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.bottle__water,
+		.bottle__art {
+			animation: none;
+		}
+	}
+</style>

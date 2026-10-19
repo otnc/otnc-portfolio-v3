@@ -1,0 +1,153 @@
+---
+import Window from '@/components/night/Window.astro';
+import Octocat from '@/components/Octocat.astro';
+import { profile } from '@/data/profile';
+import type { PinnedWork } from '@/lib/github';
+
+interface Props {
+	works: PinnedWork[];
+}
+
+const { works } = Astro.props;
+---
+
+<Window title={`/otnc/works/ (${works.length} 個の項目)`} class="window--right">
+	<h2>作品</h2>
+	<ul class="files">
+		{
+			works.map((work) => (
+				<li class="file">
+					<span class="file__icon" aria-hidden="true">
+						<span style={work.language ? `background:${work.language.color}` : undefined} />
+					</span>
+					<div class="file__body">
+						<h3>{work.owner === profile.handle ? work.name : `${work.owner}/${work.name}`}</h3>
+						<p class="file__desc" title={work.description}>
+							{work.description}
+						</p>
+						<p class="file__meta">
+							{work.language && (
+								<span>
+									<span class="file__dot" style={`background:${work.language.color}`} />
+									{work.language.name}
+								</span>
+							)}
+							{work.stars !== undefined && <span>★ {work.stars}</span>}
+						</p>
+						<p class="file__links">
+							{work.homepage && (
+								<a href={work.homepage} target="_blank" rel="noreferrer">
+									Link
+								</a>
+							)}
+							<a href={work.repo} target="_blank" rel="noreferrer">
+								GitHub
+							</a>
+						</p>
+					</div>
+				</li>
+			))
+		}
+	</ul>
+	<div class="more-works">
+		<p>
+			ほかの作品:
+			<a href={`https://github.com/${profile.handle}?tab=repositories`} target="_blank" rel="noreferrer">GitHub</a>
+			/
+			<a href={profile.lab.url} target="_blank" rel="noreferrer">{profile.lab.name}</a>
+			<span class="muted">({profile.lab.role})</span>
+		</p>
+		<Octocat scale={3} />
+	</div>
+</Window>
+
+<style>
+	.files {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+		gap: 16px;
+		margin-top: 16px;
+	}
+
+	.file {
+		display: flex;
+		gap: 16px;
+		padding: 12px;
+		outline: 2px dashed transparent;
+		outline-offset: -2px;
+	}
+
+	.file:hover,
+	.file:focus-within {
+		background: var(--bar);
+		outline-color: var(--moon);
+	}
+
+	/* A document icon with a folded corner; its bottom band takes the repository's language colour. */
+	.file__icon {
+		flex: none;
+		display: grid;
+		place-items: end center;
+		width: 48px;
+		height: 56px;
+		background: var(--moon);
+		clip-path: polygon(0 0, 70% 0, 100% 25%, 100% 100%, 0 100%);
+	}
+
+	.file__icon span {
+		width: 100%;
+		height: 16px;
+		background: var(--pink);
+	}
+
+	.file__body {
+		min-width: 0;
+	}
+
+	/* Descriptions come from GitHub and vary in length, so keep every card to two lines. */
+	.file__desc {
+		display: -webkit-box;
+		-webkit-box-orient: vertical;
+		-webkit-line-clamp: 2;
+		line-clamp: 2;
+		overflow: hidden;
+		overflow-wrap: anywhere;
+	}
+
+	.file__meta {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 16px;
+		color: var(--muted);
+	}
+
+	.file__meta > span {
+		display: inline-flex;
+		align-items: center;
+		gap: 8px;
+	}
+
+	.file__dot {
+		width: 8px;
+		height: 8px;
+	}
+
+	.file__links {
+		display: flex;
+		gap: 16px;
+	}
+
+	.more-works {
+		display: flex;
+		align-items: flex-end;
+		justify-content: space-between;
+		gap: 16px;
+		margin-top: 24px;
+	}
+
+	.more-works p {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0 8px;
+	}
+</style>
