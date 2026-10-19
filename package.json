@@ -3,6 +3,9 @@
   "type": "module",
   "version": "0.0.1",
   "private": true,
+  "engines": {
+    "node": ">=22.12.0"
+  },
   "scripts": {
     "fonts": "node scripts/build-fonts.mjs",
     "predev": "npm run fonts",
