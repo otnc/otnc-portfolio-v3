@@ -44,15 +44,17 @@ const { lang, title, description, path, skipLinkLabel = '本文へ' } = Astro.pr
 			<span class="pixel-edge" style="--edge-color:#173070;top:calc(80% - 18px)"></span>
 		</div>
 
-		<slot />
+		<div class="site">
+			<slot />
 
-		<footer class="footer">
-			<Shoreline />
-			<div class="footer__sand">
-				<p>(c) {profile.nameLatin} ({profile.name})</p>
-				<p class="footer__links"><slot name="footer-links" /></p>
-			</div>
-		</footer>
+			<footer class="footer">
+				<Shoreline />
+				<div class="footer__sand">
+					<p>(c) {profile.nameLatin} ({profile.name})</p>
+					<p class="footer__links"><slot name="footer-links" /></p>
+				</div>
+			</footer>
+		</div>
 
 		<script>
 			import { pauseWhileOffscreen, setupReveal } from '@/scripts/reveal';

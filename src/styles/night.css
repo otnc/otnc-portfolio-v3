@@ -60,6 +60,14 @@ body {
 	font-size: 20px;
 	line-height: 30px;
 	-webkit-font-smoothing: none;
+}
+
+/*
+ * Decorations (glints, wave tiles, the bottle's waterline) run past the viewport edges on purpose.
+ * They are clipped here rather than on <body>, whose overflow is handed to the viewport and does not clip reliably.
+ */
+.site {
+	overflow-x: hidden;
 	overflow-x: clip;
 }
 
