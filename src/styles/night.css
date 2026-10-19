@@ -1,0 +1,289 @@
+/*
+ * Concept: 月夜のネットサーフィン — a clear, moonlit night sea seen through late-night-internet windows.
+ * Window frames reuse the border-image corner technique from RetroUI (pixel-retroui, BSD-3-Clause).
+ * Text uses PixelMplus at exact multiples of its grid so every dot stays square:
+ * body is PixelMplus10 at 20px (2x), headings are PixelMplus12 at 24px (2x) and 48px (4x).
+ */
+:root {
+	--sky: #070b22;
+	--sea-1: #0b1638;
+	--sea-2: #12245a;
+	--sea-3: #1c3a86;
+	--window: #0d1533;
+	--bar: #1c3a86;
+	--bar-stripe: #183277;
+	--frame: #fff6d5;
+	--moon: #fff6d5;
+	--moon-gold: #ffe08a;
+	--cyan: #5ee1ff;
+	--link: #8fd8ff;
+	--visited: #c3a6ff;
+	--pink: #ff8fc8;
+	--text: #e9ecff;
+	--muted: #a9b3dd;
+	--ink: #0a0f26;
+	--paper: #fff6d5;
+	/* Sand under moonlight: desaturated and pulled toward the night blue. */
+	--sand: #3b3852;
+	--sand-dark: #2f2c44;
+	--sand-light: #4d4866;
+	--sand-wet: #26243a;
+	/* Shared size of one pixel-art dot for icons, sprites, stars and waves. */
+	--dot: 3px;
+	--font-body: 'PixelMplus10', 'PixelMplus10 Extra', monospace;
+	--font-heading: 'PixelMplus12', 'PixelMplus12 Extra', monospace;
+	--pixel-corner: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M3 1h1v1h-1zM4 1h1v1h-1zM2 2h1v1h-1zM5 2h1v1h-1zM1 3h1v1h-1zM6 3h1v1h-1zM1 4h1v1h-1zM6 4h1v1h-1zM2 5h1v1h-1zM5 5h1v1h-1zM3 6h1v1h-1zM4 6h1v1h-1z' fill='%23fff6d5'/%3E%3C/svg%3E");
+	--pixel-corner-ink: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M3 1h1v1h-1zM4 1h1v1h-1zM2 2h1v1h-1zM5 2h1v1h-1zM1 3h1v1h-1zM6 3h1v1h-1zM1 4h1v1h-1zM6 4h1v1h-1zM2 5h1v1h-1zM5 5h1v1h-1zM3 6h1v1h-1zM4 6h1v1h-1z' fill='%230a0f26'/%3E%3C/svg%3E");
+	color-scheme: dark;
+}
+
+* {
+	box-sizing: border-box;
+}
+
+html {
+	scroll-behavior: smooth;
+}
+
+body {
+	position: relative;
+	margin: 0;
+	/* Hard-stop bands, roughened by the .sea-edges strips in index.astro. */
+	background: linear-gradient(
+		var(--sea-1) 0 30%,
+		#0e1b45 30% 55%,
+		var(--sea-2) 55% 80%,
+		#173070 80% 100%
+	);
+	color: var(--text);
+	font-family: var(--font-body);
+	font-size: 20px;
+	line-height: 30px;
+	-webkit-font-smoothing: none;
+	overflow-x: clip;
+}
+
+h1,
+h2,
+h3,
+p {
+	margin: 0;
+}
+
+h1 {
+	font-family: var(--font-heading);
+	font-size: 48px;
+	line-height: 60px;
+}
+
+h2 {
+	font-family: var(--font-heading);
+	font-size: 24px;
+	line-height: 36px;
+	color: var(--moon-gold);
+}
+
+h3 {
+	font-size: 20px;
+	line-height: 30px;
+	color: var(--cyan);
+}
+
+ul {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+a {
+	color: var(--link);
+}
+
+a:visited {
+	color: var(--visited);
+}
+
+::selection {
+	background: var(--moon-gold);
+	color: var(--ink);
+}
+
+.muted {
+	color: var(--muted);
+}
+
+.skip-link {
+	position: absolute;
+	left: -9999px;
+}
+
+.skip-link:focus {
+	left: 16px;
+	top: 16px;
+	z-index: 10;
+	padding: 0 8px;
+	background: var(--moon);
+	color: var(--ink);
+}
+
+/* ---- Buttons ---- */
+
+.pixel-button {
+	--button-bg: var(--cyan);
+	display: inline-flex;
+	align-items: center;
+	gap: 8px;
+	padding: 0 12px;
+	background: var(--button-bg);
+	color: var(--ink) !important;
+	text-decoration: none;
+	border: 5px solid var(--ink);
+	border-image: var(--pixel-corner-ink) 3 / 2 / 2 stretch;
+	box-shadow:
+		2px 2px 0 2px var(--ink),
+		-2px -2px 0 2px var(--button-bg);
+	transition: transform 0.12s steps(2);
+}
+
+.pixel-button--moon {
+	--button-bg: var(--moon);
+}
+
+.pixel-button--pink {
+	--button-bg: var(--pink);
+}
+
+.pixel-button:hover,
+.pixel-button:focus-visible {
+	transform: translate(-2px, -2px);
+}
+
+.pixel-button:active {
+	transform: translateY(2px);
+	box-shadow:
+		2px 2px 0 2px var(--button-bg),
+		-2px -2px 0 2px var(--button-bg);
+}
+
+.is-paused *,
+.is-paused *::before,
+.is-paused *::after {
+	animation-play-state: paused !important;
+}
+
+/* ---- Reveal ---- */
+
+/*
+ * Windows run their own zoom-rect animation (see Window.astro). Anything else marked
+ * data-reveal rises into place in a few hard steps. Hidden only once the inline script
+ * has flagged JS, so no-JS visitors still see everything.
+ */
+.js [data-reveal]:not(.window-shell, .is-visible) {
+	visibility: hidden;
+}
+
+.js [data-reveal].is-visible:not(.window-shell) {
+	animation: rise 0.4s steps(4) both;
+}
+
+@keyframes rise {
+	from {
+		translate: 0 24px;
+		opacity: 0.4;
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.js [data-reveal]:not(.window-shell) {
+		visibility: visible;
+		animation: none;
+	}
+
+	html {
+		scroll-behavior: auto;
+	}
+}
+
+/* ---- Irregular edges ---- */
+
+/*
+ * A strip whose lower part is filled with --edge-color and whose top follows a wavy, dithered line.
+ * Laid over a straight colour boundary so it reads like the foam lip instead of a ruler-straight line.
+ * The mask tiles are 64x8 dots; the line sits around dot row 4, so centre the strip on the boundary.
+ */
+.pixel-edge {
+	position: absolute;
+	left: 0;
+	right: 0;
+	height: calc(8 * var(--dot));
+	background: var(--edge-color);
+	-webkit-mask: url('/pixel/edge-a.svg') 0 0 / calc(64 * var(--dot)) calc(8 * var(--dot)) repeat-x;
+	mask: url('/pixel/edge-a.svg') 0 0 / calc(64 * var(--dot)) calc(8 * var(--dot)) repeat-x;
+	pointer-events: none;
+}
+
+.pixel-edge--b {
+	-webkit-mask-image: url('/pixel/edge-b.svg');
+	mask-image: url('/pixel/edge-b.svg');
+}
+
+/* Just the wavy line of edge-b, for foam outlines. */
+.pixel-edge--line-b {
+	-webkit-mask-image: url('/pixel/edge-b-line.svg');
+	mask-image: url('/pixel/edge-b-line.svg');
+}
+
+/* For a boundary where the upper colour should bite into the lower one. */
+.pixel-edge--down {
+	transform: scaleY(-1);
+}
+
+.pixel-edge--drift {
+	animation: edge-drift 16s steps(64) infinite;
+}
+
+@keyframes edge-drift {
+	to {
+		-webkit-mask-position: calc(64 * var(--dot)) 0;
+		mask-position: calc(64 * var(--dot)) 0;
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.pixel-edge--drift {
+		animation: none;
+	}
+}
+
+/* ---- Page column ---- */
+
+/* The column of windows under the hero. Windows alternate slightly left and right, like a scattered desktop. */
+.page {
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	gap: 96px;
+	max-width: 1040px;
+	margin: 0 auto;
+	padding: 96px 16px 64px;
+}
+
+.page .window--left {
+	margin-right: 8%;
+}
+
+.page .window--right {
+	margin-left: 8%;
+}
+
+@media (max-width: 640px) {
+	h1 {
+		font-size: 36px;
+		line-height: 48px;
+	}
+
+	.page .window--left,
+	.page .window--right {
+		margin: 0;
+	}
+}
