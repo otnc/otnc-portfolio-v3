@@ -1,0 +1,88 @@
+---
+/**
+ * Catalan page required by the .cat domain: the registry asks for meaningful content in Catalan or for
+ * promoting Catalan language and culture. It is deliberately independent of the profile (no translated
+ * bio or works), so updating the Japanese page never requires touching this one.
+ */
+import WaterGlints from '@/components/night/WaterGlints.astro';
+import Window from '@/components/night/Window.astro';
+import NightLayout from '@/layouts/NightLayout.astro';
+
+const links = [
+	{ label: "Institut d'Estudis Catalans", url: 'https://www.iec.cat/', note: "l'acadèmia de la llengua catalana" },
+	{ label: 'Optimot', url: 'https://aplicacions.llengua.gencat.cat/llc/AppJava/index.html', note: 'consultes lingüístiques' },
+	{ label: 'Softcatalà', url: 'https://www.softcatala.org/', note: 'programari i eines en català' },
+	{ label: 'Viquipèdia en català', url: 'https://ca.wikipedia.org/', note: "l'enciclopèdia lliure" },
+	{ label: 'domini.cat', url: 'https://domini.cat/', note: 'el domini de la llengua i la cultura catalanes' },
+];
+---
+
+<NightLayout
+	lang="ca"
+	path="/ca/"
+	title="otoneko.cat en català"
+	description="Pàgina en català d'otoneko.cat sobre la llengua catalana i el domini .cat."
+	skipLinkLabel="Vés al contingut"
+>
+	<main id="main" class="page catalan">
+		<WaterGlints />
+		<h1>otoneko.cat en català</h1>
+
+		<Window title="benvinguts.txt" class="window--left">
+			<h2>Benvinguts</h2>
+			<p>
+				Aquest és el lloc web personal d'otoneko., un desenvolupador japonès. El contingut principal és en japonès, però
+				aquest lloc fa servir un domini .cat, i el .cat és el domini de la llengua i la cultura catalanes. Per això aquesta
+				pàgina és en català.
+			</p>
+		</Window>
+
+		<Window title="catala.txt" class="window--right">
+			<h2>La llengua catalana</h2>
+			<p>
+				El català és una llengua romànica. Es parla a Catalunya, al País Valencià, a les Illes Balears, a Andorra, a la
+				Catalunya del Nord, a la Franja de Ponent i a l'Alguer. A Andorra és l'única llengua oficial.
+			</p>
+		</Window>
+
+		<Window title="domini-cat.txt" class="window--left">
+			<h2>El domini .cat</h2>
+			<p>
+				El .cat es va aprovar el 2005 com a domini per a la comunitat lingüística i cultural catalana. Qualsevol persona
+				el pot registrar, sempre que el web tingui contingut en català o promogui la llengua i la cultura catalanes.
+			</p>
+		</Window>
+
+		<Window title="enllacos.html" class="window--right">
+			<h2>Enllaços</h2>
+			<ul class="links">
+				{
+					links.map((link) => (
+						<li>
+							<a href={link.url} target="_blank" rel="noreferrer">
+								{link.label}
+							</a>
+							<span class="muted">: {link.note}</span>
+						</li>
+					))
+				}
+			</ul>
+		</Window>
+	</main>
+
+	<Fragment slot="footer-links">
+		<a href="/" hreflang="ja" lang="ja">日本語 (pàgina principal)</a>
+	</Fragment>
+</NightLayout>
+
+<style>
+	.catalan h1 {
+		color: var(--moon);
+		text-align: center;
+	}
+
+	.links {
+		display: grid;
+		gap: 8px;
+	}
+</style>
