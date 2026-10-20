@@ -59,7 +59,7 @@ scripts/build-images.mjs     サムネイル (OGP 画像) と相互リンク用�
 
 ### 相互リンクを足す
 
-`src/data/profile.ts` の `mutualLinks` に `{ name, url }` を足します。相手のバナーを出すときは `banner: { src, width, height }` も付けます。一覧が空のあいだは "まだありません" と表示されます。
+`src/data/profile.ts` の `mutualLinks` に `{ name, url }` を足します。作者名を出すときは `author` も付けます。相手のバナーを出すときは `banner: { src, width, height }` も付けます。一覧が空のあいだは "まだありません" と表示されます。
 
 ### アカウントを足す
 
