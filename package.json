@@ -9,6 +9,7 @@
   },
   "scripts": {
     "fonts": "node scripts/build-fonts.mjs",
+    "images": "node scripts/build-images.mjs",
     "predev": "npm run fonts",
     "prebuild": "npm run fonts",
     "dev": "astro dev",
@@ -24,6 +25,7 @@
   },
   "devDependencies": {
     "fontkit": "^2.0.4",
+    "sharp": "^0.35.5",
     "subset-font": "^2.9.0",
     "typescript": "^7.0.2",
     "wrangler": "^4.151.2"
