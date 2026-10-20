@@ -184,7 +184,7 @@ async function writePng(path, svg) {
 	console.log(`wrote public/${path}`);
 }
 
-const OUTPUTS = ['thumbnail.png', 'banners/otoneko-200x40.png', 'banners/otoneko-88x31.png'];
+const OUTPUTS = ['thumbnail.png', 'banners/otoneko-200x40.png'];
 
 // Offline runs keep the previous images instead of failing, as long as there are some.
 let avatar;
@@ -272,14 +272,4 @@ await banner({
 	path: 'banners/otoneko-200x40.png',
 	name: { svg: (x) => text('otoneko.', { grid: 12, scale: 2, x: x + 1, y: 21, fill: C.ink }).svg + text('otoneko.', { grid: 12, scale: 2, x, y: 20, fill: C.moon }).svg },
 	url: { svg: (x) => text('otoneko.cat', { grid: 10, scale: 1, x, y: 34, fill: C.cyan }).svg },
-});
-
-await banner({
-	width: 88,
-	height: 31,
-	dot: 1,
-	avatarCells: 23,
-	path: 'banners/otoneko-88x31.png',
-	name: { svg: (x) => text('otoneko.', { grid: 12, scale: 1, x, y: 13, fill: C.moon }).svg },
-	url: { svg: (x) => text('.cat', { grid: 10, scale: 1, x, y: 25, fill: C.cyan }).svg },
 });
