@@ -1,6 +1,4 @@
-// Draws the OGP image and the link banners in the site's style: night sky, moon, dithered avatar in an
-// old-OS window, and PixelMplus text taken straight from the bundled font files so it matches the site.
-// Run with `npm run images`; the PNGs are committed because the avatar is fetched from GitHub.
+// Draws the OGP image and the link banners in the site's style, with PixelMplus text taken from the bundled font files.
 import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import * as fontkit from 'fontkit';
 import sharp from 'sharp';
@@ -105,8 +103,8 @@ function sea({ widthDots, top, bands, dot }) {
 }
 
 /**
- * The avatar, dithered like the site: line art goes dark navy, the rest is an ordered (Bayer 4x4) mix of
- * cyan and cream. Dark strokes are thickened first so thin lines survive the reduction.
+ * The avatar, dithered like the site: line art goes dark navy and the rest is an ordered (Bayer 4x4) mix of cyan and cream.
+ * Dark strokes are thickened first so thin lines survive the reduction.
  */
 async function ditheredAvatar(avatar, cells) {
 	const big = cells * 2;

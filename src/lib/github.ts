@@ -23,7 +23,7 @@ interface PinnedItem {
 	stars?: unknown;
 }
 
-/** Fetch options that let the Cloudflare edge cache the response; the `cf` key is ignored elsewhere. */
+/** Fetches with Cloudflare edge caching; the `cf` option is ignored outside Cloudflare. */
 function cachedFetch(url: string, headers: Record<string, string> = {}) {
 	return fetch(url, {
 		headers,
@@ -32,9 +32,8 @@ function cachedFetch(url: string, headers: Record<string, string> = {}) {
 }
 
 /**
- * The pinned API does not return the homepage, so it comes from the GitHub REST API. Unauthenticated calls
- * are limited to 60 per hour per IP (shared on Cloudflare), so pass a token when one is configured.
- * A failure just means no Link is shown.
+ * The pinned API does not return the homepage, so it comes from the GitHub REST API.
+ * Unauthenticated calls are limited to 60 per hour per IP (shared on Cloudflare), so pass a token when one is configured.
  */
 async function fetchHomepage(owner: string, name: string, token?: string) {
 	try {

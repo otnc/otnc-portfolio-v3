@@ -13,10 +13,7 @@ export function setupReveal() {
 	document.querySelectorAll('[data-reveal]').forEach((element) => observer.observe(element));
 }
 
-/**
- * Toggles `is-paused` on each matched element while it is off screen; night.css pauses every
- * animation inside a paused element, so endless loops (stars, glints, waves) cost nothing out of view.
- */
+/** Toggles `is-paused` while each matched element is off screen; night.css pauses every animation inside it. */
 export function pauseWhileOffscreen(selector: string) {
 	const observer = new IntersectionObserver((entries) => {
 		for (const entry of entries) entry.target.classList.toggle('is-paused', !entry.isIntersecting);

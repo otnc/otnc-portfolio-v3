@@ -1,8 +1,6 @@
 /*
- * Concept: 月夜のネットサーフィン — a clear, moonlit night sea seen through late-night-internet windows.
- * Window frames reuse the border-image corner technique from RetroUI (pixel-retroui, BSD-3-Clause).
- * Text uses PixelMplus at exact multiples of its grid so every dot stays square:
- * body is PixelMplus10 at 20px (2x), headings are PixelMplus12 at 24px (2x) and 48px (4x).
+ * Design rules live in docs/rules.md.
+ * Text uses PixelMplus at exact multiples of its grid so every dot stays square: PixelMplus10 at 20px for body text, PixelMplus12 at 24px and 48px for headings.
  */
 :root {
 	--sky: #070b22;
@@ -50,7 +48,7 @@ html {
 body {
 	position: relative;
 	margin: 0;
-	/* Hard-stop bands, roughened by the .sea-edges strips in index.astro. */
+	/* Hard-stop bands; NightLayout.astro lays wavy .pixel-edge strips over the boundaries. */
 	background: linear-gradient(
 		var(--sea-1) 0 30%,
 		#0e1b45 30% 55%,
@@ -184,9 +182,8 @@ a:visited {
 /* ---- Reveal ---- */
 
 /*
- * Windows run their own zoom-rect animation (see Window.astro). Anything else marked
- * data-reveal rises into place in a few hard steps. Hidden only once the inline script
- * has flagged JS, so no-JS visitors still see everything.
+ * Windows run their own zoom-rect animation (see Window.astro); anything else marked data-reveal rises into place.
+ * Hidden only once the inline script has flagged JS, so no-JS visitors still see everything.
  */
 .js [data-reveal]:not(.window-shell, .is-visible) {
 	visibility: hidden;
@@ -217,9 +214,8 @@ a:visited {
 /* ---- Irregular edges ---- */
 
 /*
- * A strip whose lower part is filled with --edge-color and whose top follows a wavy, dithered line.
- * Laid over a straight colour boundary so it reads like the foam lip instead of a ruler-straight line.
- * The mask tiles are 64x8 dots; the line sits around dot row 4, so centre the strip on the boundary.
+ * A strip filled with --edge-color below a smooth wavy line, laid over a straight colour boundary.
+ * The mask tiles are 64x8 dots and the line dips to about dot row 6, so put that row on the boundary.
  */
 .pixel-edge {
 	position: absolute;

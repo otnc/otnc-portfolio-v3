@@ -42,7 +42,7 @@ export const accounts: Account[] = [
 	{ label: 'Misskey', handle: '@o@misskey.otnc.dev', url: 'https://misskey.otnc.dev/@o', icon: 'misskey' },
 ];
 
-// Shown as a special "warp" section rather than in the account list.
+// Linked from the bottle mail rather than the account list.
 export const altPersona = {
 	name: 'まろん｡',
 	topics: '大学・日常・技術',

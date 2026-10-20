@@ -1,5 +1,5 @@
-// Pages Worker entry. Redirects alternate hostnames before Astro runs, so prerendered pages are covered too
-// (Astro middleware only sees on-demand routes). Which paths reach this Worker is set in public/_routes.json.
+// Redirects alternate hostnames before Astro runs, so prerendered pages are covered too (Astro middleware only sees on-demand routes).
+// Which paths reach this Worker is set in public/_routes.json.
 import handler from 'astro-adapter-cloudflare-pages/handler';
 
 const CANONICAL_HOST = 'otoneko.cat';

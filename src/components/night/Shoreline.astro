@@ -1,8 +1,5 @@
 ---
-// The beach at night. Built from two references:
-// - Godot "Pixel Water": flat depth bands joined by dithering, waves travel in from open water and fade at the beach.
-// - Slynyrd Pixelblog 10: crests steeper than troughs, short linear sparkle loops placed where the light falls.
-// Every sprite uses the shared 3px dot (--dot in night.css).
+// Based on Godot "Pixel Water" (depth bands, waves that travel in and fade at the beach) and Slynyrd Pixelblog 10 (short sparkle loops placed where the light falls).
 
 // Moon sparkles sit only in the column under the moon, which hangs at the same horizontal spot in the hero.
 const sparkles = [
@@ -62,7 +59,6 @@ const sparkles = [
 		overflow: hidden;
 	}
 
-	/* 3px checkerboard used to blend one depth band into the next. */
 	.shore__sea {
 		position: absolute;
 		inset: 0 0 auto;
@@ -189,9 +185,7 @@ const sparkles = [
 
 	/*
 	 * Wave cycle (6s): the sheet of water runs up the sand until 40%, rests until 50%, then slides back.
-	 * The wet sand shares the sheet's wavy edge (same mask, same position at full reach), turns dark the
-	 * moment the water covers it, and dries in steps while the water is away. The gloss fades sooner,
-	 * and a line of foam is left at the high-water mark.
+	 * The wet sand uses the same edge mask at the same position as the sheet at full reach, so their shapes match.
 	 */
 	.shore__wet {
 		position: absolute;

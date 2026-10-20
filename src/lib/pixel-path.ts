@@ -1,7 +1,6 @@
 /**
  * Turns a pixel grid into one SVG path per colour, merging horizontal runs.
  * This keeps pixel art to a handful of <path> elements instead of one <rect> per pixel.
- *
  * @example
  * pixelPaths(['0110', '1111'], ['#000']);
  * // => [{ fill: '#000', d: 'M1 0h2v1h-2zM0 1h4v1h-4z' }]

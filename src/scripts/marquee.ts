@@ -1,10 +1,8 @@
 const PIXELS_PER_SECOND = 60;
 
 /**
- * Fills a marquee track edge to edge with copies of its first `.marquee__group`, starts with the first
- * message centred, and scrolls it at a constant speed. Re-measures after web fonts load and on resize.
- *
- * Expects the CSS in Marquee.astro: the track animates from 0 to `--marquee-shift`, delayed by `--marquee-delay`.
+ * Fills a marquee track edge to edge with copies of its first `.marquee__group`, starts with the first message centred, and scrolls it at a constant speed.
+ * Re-measures after web fonts load and on resize. Relies on the keyframes in Marquee.astro.
  */
 export function setupMarquee(track: HTMLElement, reduceMotion: boolean) {
 	const group = track.querySelector<HTMLElement>('.marquee__group');
@@ -23,8 +21,7 @@ export function setupMarquee(track: HTMLElement, reduceMotion: boolean) {
 			track.append(copy);
 		}
 
-		// Copies are identical, so shifting by (centre offset - one group) shows the first message centred
-		// while staying inside the 0 to -groupWidth range the animation loops over.
+		// Copies are identical, so shifting by (centre offset - one group) still shows the first message centred and stays inside the looped range.
 		const firstMessage = group.firstElementChild as HTMLElement | null;
 		const firstMessageWidth = firstMessage
 			? firstMessage.getBoundingClientRect().width - parseFloat(getComputedStyle(firstMessage).paddingRight)

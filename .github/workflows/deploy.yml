@@ -1,7 +1,6 @@
 # Builds and deploys to Cloudflare Pages on every push to main.
-# The Pages project was created by direct upload, so it cannot use Cloudflare's Git integration.
-# Requires the repository secret CLOUDFLARE_API_TOKEN (Account > Cloudflare Pages > Edit)
-# and the repository variable CLOUDFLARE_ACCOUNT_ID.
+# The Pages project is a direct-upload project, so it cannot use Cloudflare's Git integration.
+# Requires the secret CLOUDFLARE_API_TOKEN (Cloudflare Pages: Edit) and the variable CLOUDFLARE_ACCOUNT_ID.
 name: Deploy
 
 on:

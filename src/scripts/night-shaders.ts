@@ -50,10 +50,7 @@ export function mountSeaBackground(element: HTMLElement) {
 	);
 }
 
-/**
- * Line art gets lost in a 2-colour dither, so the source is boosted first:
- * contrast is raised and dark strokes are thickened by stamping the image at 1px offsets.
- */
+/** Line art gets lost in a 2-colour dither, so contrast is raised and dark strokes are thickened by stamping the image at 1px offsets. */
 async function prepareLineArt(src: string, size: number) {
 	const image = new Image();
 	image.crossOrigin = 'anonymous';

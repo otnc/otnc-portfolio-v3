@@ -1,7 +1,6 @@
-// Builds the PixelMplus10 / PixelMplus12 web fonts, each in two tiers:
-// 1. "PixelMplusNN": only the characters that appear in the site's own source, so a page usually needs one small file.
-// 2. "PixelMplusNN Extra": the whole font split by Unicode block. The browser only reaches for it when text the
-//    build could not see (e.g. a pinned repository's description fetched at request time) needs other glyphs.
+// Builds the PixelMplus10 / PixelMplus12 web fonts, each in two tiers.
+// "PixelMplusNN" holds only the characters in the site's own source, so a page usually needs one small file.
+// "PixelMplusNN Extra" is the whole font split by Unicode block, used only for text the build could not see, such as pinned repository descriptions.
 import { mkdir, readdir, readFile, rm, writeFile } from 'node:fs/promises';
 import * as fontkit from 'fontkit';
 import subsetFont from 'subset-font';
