@@ -5,3 +5,5 @@ dist/
 .env
 public/fonts/pixelmplus/
 src/styles/pixelmplus.css
+public/thumbnail.png
+public/banners/

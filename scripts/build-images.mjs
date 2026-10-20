@@ -1,5 +1,7 @@
-// Draws the OGP image and the link banners in the site's style, with PixelMplus text taken from the bundled font files.
-import { mkdir, readFile, writeFile } from 'node:fs/promises';
+// Draws the thumbnail (used as the OGP image) and the link banners in the site's style, with PixelMplus text taken from the bundled font files.
+// Runs before every dev server and build, so the images always match the current profile and avatar.
+import { existsSync } from 'node:fs';
+import { mkdir, readFile } from 'node:fs/promises';
 import * as fontkit from 'fontkit';
 import sharp from 'sharp';
 
@@ -164,10 +166,24 @@ async function writePng(path, svg) {
 	console.log(`wrote public/${path}`);
 }
 
-const avatar = Buffer.from(await (await fetch(AVATAR_URL)).arrayBuffer());
+const OUTPUTS = ['thumbnail.png', 'banners/otoneko-200x40.png', 'banners/otoneko-88x31.png'];
+
+// Offline runs keep the previous images instead of failing, as long as there are some.
+let avatar;
+try {
+	const response = await fetch(AVATAR_URL);
+	if (!response.ok) throw new Error(`avatar responded ${response.status}`);
+	avatar = Buffer.from(await response.arrayBuffer());
+} catch (error) {
+	if (OUTPUTS.every((path) => existsSync(new URL(path, OUT)))) {
+		console.warn(`Could not fetch the avatar (${error.message}); keeping the existing images.`);
+		process.exit(0);
+	}
+	throw error;
+}
 const avatarColors = { i: C.ink, c: C.cyan, w: C.frame };
 
-// ---- OGP: 1200x630, 6px dots ----
+// ---- Thumbnail: 1200x630, 6px dots ----
 {
 	const dot = 6;
 	const W = 1200;
@@ -203,7 +219,7 @@ const avatarColors = { i: C.ink, c: C.cyan, w: C.frame };
 	body += tagline.svg;
 	body += text('otoneko.cat', { grid: 10, scale: 4, x: left, y: 520, fill: C.cyan }).svg;
 
-	await writePng('ogp.png', svgDocument(W, H, body));
+	await writePng('thumbnail.png', svgDocument(W, H, body));
 }
 
 // ---- Link banners ----

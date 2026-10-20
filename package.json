@@ -10,8 +10,8 @@
   "scripts": {
     "fonts": "node scripts/build-fonts.mjs",
     "images": "node scripts/build-images.mjs",
-    "predev": "npm run fonts",
-    "prebuild": "npm run fonts",
+    "predev": "npm run fonts && npm run images",
+    "prebuild": "npm run fonts && npm run images",
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
