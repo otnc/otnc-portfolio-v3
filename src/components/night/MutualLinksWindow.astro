@@ -6,7 +6,7 @@ import { SITE_ORIGIN, mutualLinks, profile } from '@/data/profile';
 // The thumbnail is shown at half size, which keeps its 6px dots square.
 const ownBanners = [
 	{ path: '/thumbnail.png', width: 1200, height: 630, displayWidth: 600 },
-	{ path: '/banners/otoneko-200x40.png', width: 200, height: 40 },
+	{ path: '/banners/normal.png', width: 200, height: 40 },
 ];
 const bannerHtml = (banner: (typeof ownBanners)[number]) =>
 	`<a href="${SITE_ORIGIN}/"><img src="${SITE_ORIGIN}${banner.path}" width="${banner.width}" height="${banner.height}" alt="${profile.nameLatin}"></a>`;
