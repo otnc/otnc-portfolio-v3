@@ -19,6 +19,7 @@ src/
 │   │   ├── WorksWindow.astro    作品 (GitHub pinned)
 │   │   ├── BottleMail.astro     まろん｡への入口
 │   │   ├── LinksWindow.astro    アカウントと支援
+│   │   ├── MutualLinksWindow.astro  相互リンク先と、このサイトのバナー
 │   │   ├── Window.astro         ウィンドウ枠と開くアニメーション
 │   │   ├── NightSky.astro / MoonReflection.astro / WaterGlints.astro
 │   │   └── Shoreline.astro      波打ち際
@@ -55,6 +56,10 @@ scripts/build-images.mjs     サムネイル (OGP 画像) と相互リンク用�
 `src/data/profile.ts` を直します。自己紹介、役割のタグ、使える言語、バナーのメッセージ、アカウント、支援、まろん｡の枠の文はすべてここにあります。
 
 新しい文字 (特に漢字) を使うと、フォントの生成対象が変わります。`npm run dev` と `npm run build` は先にフォントを作り直すので、特別な作業はいりません。
+
+### 相互リンクを足す
+
+`src/data/profile.ts` の `mutualLinks` に `{ name, url }` を足します。相手のバナーを出すときは `banner: { src, width, height }` も付けます。一覧が空のあいだは "まだありません" と表示されます。
 
 ### アカウントを足す
 

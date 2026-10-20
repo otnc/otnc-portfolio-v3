@@ -35,7 +35,7 @@ Pages プロジェクトは直接アップロード型なので、Cloudflare 側
 | `public/banners/otoneko-200x40.png` | 200x40 | 相互リンク用バナー |
 | `public/banners/otoneko-88x31.png` | 88x31 | 相互リンク用バナー (小) |
 
-`npm run dev` と `npm run build` の前に毎回作り直すので、デプロイのたびに今のプロフィールとアバターが反映されます。生成物は git 管理外です。アバターを取得できないとき (オフラインなど) は、前に作った画像があればそれを使い、なければ失敗します。OGP のメタタグは `src/layouts/NightLayout.astro` にあり、バナーと貼り付け用の HTML はリンクのウィンドウに載せています。
+`npm run dev` と `npm run build` の前に毎回作り直すので、デプロイのたびに今のプロフィールとアバターが反映されます。生成物は git 管理外です。アバターを取得できないとき (オフラインなど) は、前に作った画像があればそれを使い、なければ失敗します。OGP のメタタグは `src/layouts/NightLayout.astro` にあり、サムネイルとバナー、貼り付け用の HTML は相互リンクのウィンドウ (`mutual-links.txt`) に載せています。
 
 ## Pages の環境変数
 
