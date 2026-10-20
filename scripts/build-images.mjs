@@ -1,7 +1,7 @@
-// Draws the thumbnail (used as the OGP image) and the link banners in the site's style, with PixelMplus text taken from the bundled font files.
+// Draws the thumbnail (used as the OGP image), the link banners and the favicon in the site's style, with PixelMplus text taken from the bundled font files.
 // Runs before every dev server and build, so the images always match the current profile and avatar.
 import { existsSync } from 'node:fs';
-import { mkdir, readFile } from 'node:fs/promises';
+import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import * as fontkit from 'fontkit';
 import sharp from 'sharp';
 
@@ -184,7 +184,12 @@ async function writePng(path, svg) {
 	console.log(`wrote public/${path}`);
 }
 
-const OUTPUTS = ['thumbnail.png', 'banners/normal.png'];
+async function writeSvg(path, svg) {
+	await writeFile(new URL(path, OUT), svg);
+	console.log(`wrote public/${path}`);
+}
+
+const OUTPUTS = ['thumbnail.png', 'banners/normal.png', 'favicon.svg', 'favicon.png'];
 
 // Offline runs keep the previous images instead of failing, as long as there are some.
 let avatar;
@@ -273,3 +278,22 @@ await banner({
 	name: { svg: (x) => text('otoneko.', { grid: 12, scale: 2, x: x + 1, y: 21, fill: C.ink }).svg + text('otoneko.', { grid: 12, scale: 2, x, y: 20, fill: C.moon }).svg },
 	url: { svg: (x) => text('otoneko.cat', { grid: 10, scale: 1, x, y: 34, fill: C.cyan }).svg },
 });
+
+// ---- Favicon: the banner avatar inside a cream moon ring, transparent outside ----
+{
+	const size = 32;
+	const inner = 26;
+	const face = await bannerAvatar(avatar, inner);
+	const offset = (size - inner) / 2;
+	const rows = Array.from({ length: size }, (_, y) =>
+		Array.from({ length: size }, (_, x) => {
+			const distance = Math.hypot(x + 0.5 - size / 2, y + 0.5 - size / 2);
+			if (distance > size / 2 - 0.5) return '.';
+			if (distance > size / 2 - 2.5) return 'm';
+			return face[y - offset]?.[x - offset] ?? 'c';
+		}).join(''),
+	);
+	const svg = svgDocument(size, size, grid(rows, { m: C.moon, i: C.ink, c: C.cyan }, { x: 0, y: 0, cell: 1 }));
+	await writeSvg('favicon.svg', svg);
+	await writePng('favicon.png', svg);
+}
