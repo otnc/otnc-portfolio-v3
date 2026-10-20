@@ -59,10 +59,11 @@ export const supports: LinkItem[] = [
 
 export interface MutualLink {
 	name: string;
+	author?: string;
 	url: string;
 	/** Their banner image, shown instead of the name when given. */
 	banner?: { src: string; width: number; height: number };
 }
 
 // Sites that link back here. Add an entry to list a new partner in the mutual links window.
-export const mutualLinks: MutualLink[] = [];
+export const mutualLinks: MutualLink[] = [{ name: "Np's pages", author: 'Np', url: 'https://negapainter.work' }];

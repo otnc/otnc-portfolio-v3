@@ -43,9 +43,10 @@ const bannerHtml = (banner: (typeof ownBanners)[number]) =>
 							{link.banner ? (
 								<img src={link.banner.src} width={link.banner.width} height={link.banner.height} alt={link.name} />
 							) : (
-								<span>{link.name}</span>
+								<span>◆ {link.name}</span>
 							)}
 						</a>
+						{link.author && <span class="muted author">by {link.author}</span>}
 					</li>
 				))}
 			</ul>
@@ -67,6 +68,10 @@ const bannerHtml = (banner: (typeof ownBanners)[number]) =>
 		max-width: 100%;
 		height: auto;
 		image-rendering: pixelated;
+	}
+
+	.author {
+		margin-left: 8px;
 	}
 
 	.section-gap {
