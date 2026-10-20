@@ -4,6 +4,7 @@ import BottleMail from '@/components/night/BottleMail.astro';
 import Hero from '@/components/night/Hero.astro';
 import LinksWindow from '@/components/night/LinksWindow.astro';
 import Marquee from '@/components/night/Marquee.astro';
+import MutualLinksWindow from '@/components/night/MutualLinksWindow.astro';
 import WaterGlints from '@/components/night/WaterGlints.astro';
 import WorksWindow from '@/components/night/WorksWindow.astro';
 import NightLayout from '@/layouts/NightLayout.astro';
@@ -25,6 +26,7 @@ const works = await fetchPinnedWorks(profile.handle, githubToken);
 		<WorksWindow works={works} />
 		<BottleMail />
 		<LinksWindow />
+		<MutualLinksWindow />
 	</main>
 
 	<Fragment slot="footer-links">

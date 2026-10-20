@@ -56,3 +56,13 @@ export const supports: LinkItem[] = [
 	{ label: 'Buy Me a Coffee', handle: 'devuloper', url: 'https://www.buymeacoffee.com/devuloper' },
 	{ label: 'Ko-fi', handle: 'E1E41LY2C9', url: 'https://ko-fi.com/E1E41LY2C9' },
 ];
+
+export interface MutualLink {
+	name: string;
+	url: string;
+	/** Their banner image, shown instead of the name when given. */
+	banner?: { src: string; width: number; height: number };
+}
+
+// Sites that link back here. Add an entry to list a new partner in the mutual links window.
+export const mutualLinks: MutualLink[] = [];
