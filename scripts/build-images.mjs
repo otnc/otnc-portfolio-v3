@@ -135,6 +135,24 @@ async function ditheredAvatar(avatar, cells) {
 	return rows;
 }
 
+/**
+ * The avatar for the small link banners.
+ * Dithering turns into noise at this size, so the face is cropped and any cell that touches a line becomes a solid navy dot on plain cyan.
+ */
+async function bannerAvatar(avatar, cells) {
+	const { width } = await sharp(avatar).metadata();
+	const side = Math.round(width * 0.65);
+	const { data } = await sharp(avatar)
+		.extract({ left: Math.round(width * 0.1), top: Math.round(width * 0.2), width: side, height: side })
+		.greyscale()
+		.resize(cells, cells, { kernel: 'cubic' })
+		.raw()
+		.toBuffer({ resolveWithObject: true });
+	return Array.from({ length: cells }, (_, y) =>
+		Array.from({ length: cells }, (_, x) => (data[y * cells + x] / 255 < 0.88 ? 'i' : 'c')).join(''),
+	);
+}
+
 /** An old-OS window: cream frame, striped title bar with icon, title and the three buttons, and a body slot. */
 function windowFrame({ x, y, width, bodyHeight, title, dot, titleScale }) {
 	const bar = 6 * dot;
@@ -223,12 +241,12 @@ const avatarColors = { i: C.ink, c: C.cyan, w: C.frame };
 }
 
 // ---- Link banners ----
-async function banner({ width, height, avatarCells, name, url, path }) {
-	const dot = 2;
+// `dot` is the size of one decorative dot, matched to the banner's text scale.
+async function banner({ width, height, dot, avatarCells, name, url, path }) {
 	let body = `<rect width="${width}" height="${height}" fill="${C.sky}"/>`;
 	const rand = random(1102);
 	for (let index = 0; index < width / 8; index += 1) {
-		body += `<rect x="${Math.round(rand() * width)}" y="${Math.round(rand() * height * 0.55)}" width="1" height="1" fill="${C.moon}" opacity="0.8"/>`;
+		body += `<rect x="${Math.round((rand() * width) / dot) * dot}" y="${Math.round((rand() * height * 0.55) / dot) * dot}" width="${dot}" height="${dot}" fill="${C.moon}" opacity="0.8"/>`;
 	}
 	body += sea({ widthDots: width / dot, top: Math.round((height * 0.75) / dot), dot, bands: [[C.sea2, 3], [C.sea3, 20]] });
 	const moonSize = height >= 40 ? 10 : 7;
@@ -236,7 +254,7 @@ async function banner({ width, height, avatarCells, name, url, path }) {
 
 	const pad = 4;
 	body += `<rect x="${pad - 1}" y="${pad - 1}" width="${avatarCells + 2}" height="${avatarCells + 2}" fill="${C.frame}"/>`;
-	body += grid(await ditheredAvatar(avatar, avatarCells), avatarColors, { x: pad, y: pad, cell: 1 });
+	body += grid(await bannerAvatar(avatar, avatarCells), { i: C.ink, c: C.cyan }, { x: pad, y: pad, cell: 1 });
 
 	const left = pad + avatarCells + 6;
 	body += name.svg(left);
@@ -249,6 +267,7 @@ async function banner({ width, height, avatarCells, name, url, path }) {
 await banner({
 	width: 200,
 	height: 40,
+	dot: 2,
 	avatarCells: 32,
 	path: 'banners/otoneko-200x40.png',
 	name: { svg: (x) => text('otoneko.', { grid: 12, scale: 2, x: x + 1, y: 21, fill: C.ink }).svg + text('otoneko.', { grid: 12, scale: 2, x, y: 20, fill: C.moon }).svg },
@@ -258,6 +277,7 @@ await banner({
 await banner({
 	width: 88,
 	height: 31,
+	dot: 1,
 	avatarCells: 23,
 	path: 'banners/otoneko-88x31.png',
 	name: { svg: (x) => text('otoneko.', { grid: 12, scale: 1, x, y: 13, fill: C.moon }).svg },
