@@ -25,6 +25,18 @@ Pages プロジェクトは直接アップロード型なので、Cloudflare 側
 
 手元からデプロイするときは、`devuloper` にログインした wrangler で `npm run deploy` を実行します。
 
+## OGP 画像と相互リンク用バナー
+
+`npm run images` ([scripts/build-images.mjs](../scripts/build-images.mjs)) が次の画像を作ります。サイトと同じ配色、ドット、PixelMplus の字形で描き、アイコンは GitHub のアバターを取ってきてディザ化します。
+
+| ファイル | 大きさ | 用途 |
+| --- | --- | --- |
+| `public/ogp.png` | 1200x630 | OGP (SNS のリンクプレビュー) |
+| `public/banners/otoneko-200x40.png` | 200x40 | 相互リンク用バナー |
+| `public/banners/otoneko-88x31.png` | 88x31 | 相互リンク用バナー (小) |
+
+アバターの取得にネットワークが要るので、ビルドでは作らず、生成した PNG をコミットしています。名前、キャッチコピー、アバターを変えたら `npm run images` を実行してコミットします。OGP のメタタグは `src/layouts/NightLayout.astro` にあり、バナーと貼り付け用の HTML はリンクのウィンドウに載せています。
+
 ## Pages の環境変数
 
 | 名前 | 必須 | 用途 |

@@ -45,6 +45,7 @@ public/
 └── pixel/                   波、泡の線、カニ、貝殻などの SVG
 fonts/pixelmplus/            フォントの元ファイルとライセンス
 scripts/build-fonts.mjs      フォントのサブセット生成
+scripts/build-images.mjs     OGP 画像と相互リンク用バナーの生成
 ```
 
 ## よくある変更
