@@ -33,6 +33,7 @@ Pages プロジェクトは直接アップロード型なので、Cloudflare 側
 | --- | --- | --- |
 | `public/thumbnail.png` | 1200x630 | サムネイル。OGP 画像 (SNS のリンクプレビュー) として使う |
 | `public/banners/normal.png` | 200x40 | 相互リンク用バナー |
+| `public/favicon.svg`, `public/favicon.png` | 32x32 | favicon。月の輪の中にアバター、外側は透過。SVG を優先し、PNG は SVG を読めないブラウザ向け |
 
 `npm run dev` と `npm run build` の前に毎回作り直すので、デプロイのたびに今のプロフィールとアバターが反映されます。生成物は git 管理外です。アバターを取得できないとき (オフラインなど) は、前に作った画像があればそれを使い、なければ失敗します。OGP のメタタグは `src/layouts/NightLayout.astro` にあり、サムネイルとバナー、貼り付け用の HTML は相互リンクのウィンドウ (`mutual-links.txt`) に載せています。
 
