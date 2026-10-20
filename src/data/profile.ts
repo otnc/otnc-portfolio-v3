@@ -16,6 +16,7 @@ export const profile = {
 	name: '音猫｡',
 	nameLatin: 'otoneko.',
 	handle: 'otnc',
+	twitter: '@rin_pineapple',
 	avatar: 'https://avatars.githubusercontent.com/u/116952822?v=4&s=400',
 	tagline: '海を潜っています:)',
 	// Scrolled across the banner under the hero.
