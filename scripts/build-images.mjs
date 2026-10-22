@@ -1,11 +1,11 @@
 // Draws the thumbnail (used as the OGP image), the link banners and the favicon in the site's style, with PixelMplus text taken from the bundled font files.
 // Runs before every dev server and build, so the images always match the current profile and avatar.
-import { existsSync } from 'node:fs';
 import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import * as fontkit from 'fontkit';
 import sharp from 'sharp';
 
-const AVATAR_URL = 'https://avatars.githubusercontent.com/u/116952822?v=4&s=460';
+// The same avatar the site dithers in the hero.
+const AVATAR = new URL('../public/avatar.png', import.meta.url);
 const OUT = new URL('../public/', import.meta.url);
 
 const C = {
@@ -116,10 +116,10 @@ async function ditheredAvatar(avatar, cells) {
 	for (let y = 0; y < cells; y += 1) {
 		let row = '';
 		for (let x = 0; x < cells; x += 1) {
-			// Minimum over a 4x4 neighbourhood of the 2x image: shrinks while keeping (and fattening) dark lines.
+			// Minimum over each 2x2 block of the 2x image: shrinks without losing thin dark lines.
 			let value = 255;
-			for (let dy = -1; dy <= 2; dy += 1) {
-				for (let dx = -1; dx <= 2; dx += 1) {
+			for (let dy = 0; dy <= 1; dy += 1) {
+				for (let dx = 0; dx <= 1; dx += 1) {
 					const sx = Math.min(big - 1, Math.max(0, x * 2 + dx));
 					const sy = Math.min(big - 1, Math.max(0, y * 2 + dy));
 					value = Math.min(value, data[sy * big + sx]);
@@ -137,19 +137,30 @@ async function ditheredAvatar(avatar, cells) {
 
 /**
  * The avatar for the small link banners.
- * Dithering turns into noise at this size, so the face is cropped and any cell that touches a line becomes a solid navy dot on plain cyan.
+ * Dithering turns into noise at this size, so the head is cropped and any cell that touches a line becomes a solid navy dot on plain cyan.
+ * Resizing first would average the thin strokes away, so each cell counts the dark pixels of its block in the full-size image instead.
  */
-async function bannerAvatar(avatar, cells) {
+async function bannerAvatar(avatar, cells, { inkShare = 0.42, crop = { left: 0.04, top: 0.02, side: 0.8 } } = {}) {
 	const { width } = await sharp(avatar).metadata();
-	const side = Math.round(width * 0.65);
+	const side = Math.round(width * crop.side);
 	const { data } = await sharp(avatar)
-		.extract({ left: Math.round(width * 0.1), top: Math.round(width * 0.2), width: side, height: side })
+		.extract({ left: Math.round(width * crop.left), top: Math.round(width * crop.top), width: side, height: side })
 		.greyscale()
-		.resize(cells, cells, { kernel: 'cubic' })
 		.raw()
 		.toBuffer({ resolveWithObject: true });
+	const block = side / cells;
 	return Array.from({ length: cells }, (_, y) =>
-		Array.from({ length: cells }, (_, x) => (data[y * cells + x] / 255 < 0.88 ? 'i' : 'c')).join(''),
+		Array.from({ length: cells }, (_, x) => {
+			let dark = 0;
+			let total = 0;
+			for (let sy = Math.floor(y * block); sy < Math.floor((y + 1) * block); sy += 1) {
+				for (let sx = Math.floor(x * block); sx < Math.floor((x + 1) * block); sx += 1) {
+					total += 1;
+					if (data[sy * side + sx] < 160) dark += 1;
+				}
+			}
+			return dark / total > inkShare ? 'i' : 'c';
+		}).join(''),
 	);
 }
 
@@ -189,21 +200,7 @@ async function writeSvg(path, svg) {
 	console.log(`wrote public/${path}`);
 }
 
-const OUTPUTS = ['thumbnail.png', 'banners/normal.png', 'favicon.svg', 'favicon.png'];
-
-// Offline runs keep the previous images instead of failing, as long as there are some.
-let avatar;
-try {
-	const response = await fetch(AVATAR_URL);
-	if (!response.ok) throw new Error(`avatar responded ${response.status}`);
-	avatar = Buffer.from(await response.arrayBuffer());
-} catch (error) {
-	if (OUTPUTS.every((path) => existsSync(new URL(path, OUT)))) {
-		console.warn(`Could not fetch the avatar (${error.message}); keeping the existing images.`);
-		process.exit(0);
-	}
-	throw error;
-}
+const avatar = await readFile(AVATAR);
 const avatarColors = { i: C.ink, c: C.cyan, w: C.frame };
 
 // ---- Thumbnail: 1200x630, 6px dots ----
@@ -283,7 +280,8 @@ await banner({
 {
 	const size = 32;
 	const inner = 26;
-	const face = await bannerAvatar(avatar, inner);
+	// The whole head turns into specks at this size, so the favicon zooms in on the face, with a higher share so the eyes do not fill in.
+	const face = await bannerAvatar(avatar, inner, { inkShare: 0.65, crop: { left: 0.22, top: 0.33, side: 0.42 } });
 	const offset = (size - inner) / 2;
 	const rows = Array.from({ length: size }, (_, y) =>
 		Array.from({ length: size }, (_, x) => {
