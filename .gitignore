@@ -9,3 +9,6 @@ public/thumbnail.png
 public/banners/
 public/favicon.svg
 public/favicon.png
+
+# Local notes that are not part of the site
+.private/
