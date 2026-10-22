@@ -27,7 +27,7 @@ Pages プロジェクトは直接アップロード型なので、Cloudflare 側
 
 ## サムネイル (OGP 画像) と相互リンク用バナー
 
-`npm run images` ([scripts/build-images.mjs](../scripts/build-images.mjs)) が次の画像を作ります。サイトと同じ配色、ドット、PixelMplus の字形で描き、アイコンは GitHub のアバターを取ってきてディザ化します。
+`npm run images` ([scripts/build-images.mjs](../scripts/build-images.mjs)) が次の画像を作ります。サイトと同じ配色、ドット、PixelMplus の字形で描き、アイコンは `public/avatar.png` をディザ化します。
 
 | ファイル | 大きさ | 用途 |
 | --- | --- | --- |
@@ -35,7 +35,13 @@ Pages プロジェクトは直接アップロード型なので、Cloudflare 側
 | `public/banners/normal.png` | 200x40 | 相互リンク用バナー |
 | `public/favicon.svg`, `public/favicon.png` | 32x32 | favicon。月の輪の中にアバター、外側は透過。SVG を優先し、PNG は SVG を読めないブラウザ向け |
 
-`npm run dev` と `npm run build` の前に毎回作り直すので、デプロイのたびに今のプロフィールとアバターが反映されます。生成物は git 管理外です。アバターを取得できないとき (オフラインなど) は、前に作った画像があればそれを使い、なければ失敗します。OGP のメタタグは `src/layouts/NightLayout.astro` にあり、サムネイルとバナー、貼り付け用の HTML は相互リンクのウィンドウ (`mutual-links.txt`) に載せています。
+`npm run dev` と `npm run build` の前に毎回作り直すので、デプロイのたびに今のプロフィールとアバターが反映されます。生成物は git 管理外です。
+
+## アイコン
+
+アイコンは `public/avatar.png` (400x400) の1枚です。ヒーローのディザと、サムネイル・バナー・favicon の元にします。WebGL が使えずディザを出せないときは、ヒーローでこの画像をグレースケールにして表示します。
+
+線画はディザで線が消えやすいので、明暗を強めた画像を置きます。差し替えるときは、この画像を置き換えて `npm run images` を実行します。小さいバナーと favicon は頭のまわりを切り抜いているので、構図が大きく変わったら `scripts/build-images.mjs` の `bannerAvatar` の切り抜き位置も合わせます。OGP のメタタグは `src/layouts/NightLayout.astro` にあり、サムネイルとバナー、貼り付け用の HTML は相互リンクのウィンドウ (`mutual-links.txt`) に載せています。
 
 ## Pages の環境変数
 
