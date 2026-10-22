@@ -14,6 +14,6 @@ This covers:
 
 These belong to others and are not licensed by this repository:
 
-- The avatar image. The site loads it from GitHub at runtime; the generated thumbnail and banners contain a dithered copy of it, which is likewise not covered.
+- The avatar image (`public/avatar.png`). The generated thumbnail, banners and favicon contain a dithered copy of it, which is likewise not covered.
 - The GitHub, Twitter and Misskey marks and the Octocat, including the pixel versions in `src/data/pixel-icons.ts`. They are trademarks of their owners. The GitHub and Twitter grids and the Octocat come from NES.css (see [THIRD-PARTY-NOTICES.md](THIRD-PARTY-NOTICES.md)).
 - The PixelMplus fonts in `fonts/pixelmplus/`, distributed under the M+ FONT LICENSE included there.
