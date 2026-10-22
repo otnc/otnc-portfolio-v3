@@ -5,7 +5,7 @@ import { profile } from '@/data/profile';
 
 <Window title="about.txt - メモ帳" class="window--left">
 	<h2>自己紹介</h2>
-	<p class="alias">漢字では「{profile.name}」と書きます。</p>
+	<p class="alias">「{profile.name}」と書きます。</p>
 	<p>{profile.bio}</p>
 	<ul class="tags">
 		{profile.roles.map((role) => <li class="tag">{role}</li>)}

@@ -27,7 +27,7 @@ export const profile = {
 		'便利とロマンをシェアしよう',
 		'思い立ったが吉日',
 		'気になった作品があれば GitHub で ★ を',
-		'大学・日常・技術の話は まろん｡ のほうで',
+		'大学・日常・技術の話は別のほうで',
 		'ゆっくりしていってね',
 	],
 	roles: ['ネタ駆動開発', 'フルスタック?な開発者', 'おもしろOSS開発者', 'OSSコントリビューター', '開発者コミュニティのスタッフ'],
@@ -44,9 +44,8 @@ export const accounts: Account[] = [
 
 // Linked from the bottle mail rather than the account list.
 export const altPersona = {
-	name: 'まろん｡',
 	topics: '大学・日常・技術',
-	summary: '大学・日常・技術の話は、もうひとりのわたし「まろん｡」のほうで。',
+	summary: '大学・日常・技術の話は、もうひとりのわたしのほうで。',
 	twitter: { handle: '@rin_montblank', url: 'https://twitter.com/rin_montblank' },
 	site: { label: 'montblank.fun', url: 'https://montblank.fun' },
 };
