@@ -1,0 +1,29 @@
+---
+import WaterGlints from '@/components/night/WaterGlints.astro';
+import Window from '@/components/night/Window.astro';
+import NightLayout from '@/layouts/NightLayout.astro';
+import { profile } from '@/data/profile';
+---
+
+<NightLayout lang="ja" path="/404" title={`404 - ${profile.nameLatin} (${profile.name})`} description="ページが見つかりませんでした。">
+	<main id="main" class="page not-found">
+		<WaterGlints />
+		<Window title="404.txt - メモ帳">
+			<h1>404</h1>
+			<p>ページが見つかりませんでした。</p>
+			<p class="not-found__back"><a class="pixel-button" href="/">Home</a></p>
+		</Window>
+	</main>
+</NightLayout>
+
+<style>
+	.not-found {
+		min-height: 60vh;
+		padding-top: 160px;
+		padding-bottom: 96px;
+	}
+
+	.not-found__back {
+		margin-top: 16px;
+	}
+</style>

@@ -8,6 +8,7 @@ Astro 7 を SSR (`output: 'server'`) で動かし、Cloudflare Pages に置い�
 src/
 ├── pages/
 │   ├── index.astro          トップ。部品を並べるだけ
+│   ├── 404.astro            見つからないページ (montblank.fun と同じ形)
 │   └── ca/index.astro       カタルーニャ語ページ (独立)
 ├── layouts/
 │   └── NightLayout.astro    <head>、海の段の凸凹、砂浜のフッター、共通スクリプト
