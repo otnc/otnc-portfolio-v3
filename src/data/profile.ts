@@ -46,7 +46,6 @@ export const accounts: Account[] = [
 export const altPersona = {
 	topics: '大学・日常・技術',
 	summary: '大学・日常・技術の話は、もうひとりのわたしのほうで。',
-	twitter: { handle: '@rin_montblank', url: 'https://twitter.com/rin_montblank' },
 	site: { label: 'montblank.fun', url: 'https://montblank.fun' },
 };
 
