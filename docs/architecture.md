@@ -29,6 +29,7 @@ src/
 │   ├── night-shaders.ts     背景の波とアイコンのディザ (Paper Shaders)
 │   ├── marquee.ts           バナーの複製、中央開始、等速ループ
 │   ├── reveal.ts            ウィンドウを開く、画面外のアニメーション停止
+│   ├── birthday-fireworks.ts 誕生日 (11月2日、日本時間) だけ上がるドット絵の花火
 │   └── typewriter.ts        1文字ずつ打ち込む
 ├── data/
 │   ├── profile.ts           名前、自己紹介、アカウント、支援などの文言

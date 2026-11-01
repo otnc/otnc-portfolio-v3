@@ -72,9 +72,11 @@ const ogLocale: Record<string, string> = { ja: 'ja_JP', ca: 'ca_ES' };
 		</div>
 
 		<script>
+			import { setupBirthdayFireworks } from '@/scripts/birthday-fireworks';
 			import { pauseWhileOffscreen, setupReveal } from '@/scripts/reveal';
 
 			setupReveal();
+			setupBirthdayFireworks();
 			pauseWhileOffscreen('.hero, .page, .footer');
 		</script>
 	</body>
