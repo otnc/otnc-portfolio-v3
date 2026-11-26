@@ -16,10 +16,9 @@ src/
 │   ├── night/               夜の海の部品
 │   │   ├── Hero.astro           夜空、アイコン、名前、キャッチコピー
 │   │   ├── Marquee.astro        流れるメッセージ
-│   │   ├── AboutWindow.astro    自己紹介
+│   │   ├── AboutWindow.astro    自己紹介、アカウント (SNS)、支援
 │   │   ├── WorksWindow.astro    作品 (GitHub pinned)
 │   │   ├── BottleMail.astro     まろん｡への入口
-│   │   ├── LinksWindow.astro    アカウントと支援
 │   │   ├── MutualLinksWindow.astro  相互リンク先と、このサイトのバナー
 │   │   ├── Window.astro         ウィンドウ枠と開くアニメーション
 │   │   ├── NightSky.astro / MoonReflection.astro / WaterGlints.astro
@@ -66,7 +65,7 @@ scripts/build-images.mjs     サムネイル (OGP 画像)、相互リンク用�
 ### アカウントを足す
 
 1. `src/data/pixel-icons.ts` に 16x16 のアイコンを足します。`rows` は16文字の行が16行で、`0` は透明、`1` 以降は `colors` の番号です。
-2. `src/data/profile.ts` の `accounts` に `icon` 付きで足します。ヒーローとリンクのウィンドウの両方に出ます。
+2. `src/data/profile.ts` の `accounts` に `icon` 付きで足します。ヒーローと自己紹介のウィンドウの両方に出ます。
 
 ### ウィンドウ (セクション) を足す
 

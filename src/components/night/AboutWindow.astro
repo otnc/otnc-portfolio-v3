@@ -1,6 +1,7 @@
 ---
 import Window from '@/components/night/Window.astro';
-import { profile } from '@/data/profile';
+import PixelIcon from '@/components/PixelIcon.astro';
+import { accounts, profile, supports } from '@/data/profile';
 ---
 
 <Window title="about.txt" class="window--left">
@@ -13,6 +14,34 @@ import { profile } from '@/data/profile';
 	<h3>使える言語・技術</h3>
 	<ul class="tags">
 		{profile.skills.map((skill) => <li class="tag tag--ghost">{skill}</li>)}
+	</ul>
+
+	<h3>SNS</h3>
+	<ul class="links">
+		{
+			accounts.map((account) => (
+				<li>
+					<a href={account.url} target="_blank" rel="noreferrer">
+						<PixelIcon name={account.icon} />
+						<span>{account.label}</span>
+						<span class="muted links__handle">{account.handle}</span>
+					</a>
+				</li>
+			))
+		}
+	</ul>
+
+	<h3 class="links-heading">支援</h3>
+	<ul class="links">
+		{
+			supports.map((support) => (
+				<li>
+					<a href={support.url} target="_blank" rel="noreferrer">
+						<span>★ {support.label}</span>
+					</a>
+				</li>
+			))
+		}
 	</ul>
 </Window>
 
@@ -33,6 +62,44 @@ import { profile } from '@/data/profile';
 		padding: 0 8px;
 		background: var(--cyan);
 		color: var(--ink);
+	}
+
+	.links-heading {
+		margin-top: 16px;
+	}
+
+	.links {
+		display: grid;
+		gap: 4px;
+		margin-top: 8px;
+	}
+
+	.links a {
+		display: flex;
+		align-items: center;
+		gap: 12px;
+		padding: 0 8px;
+		text-decoration: none;
+	}
+
+	.links a:hover,
+	.links a:focus-visible {
+		background: var(--moon);
+		color: var(--ink);
+	}
+
+	.links a:hover .muted {
+		color: var(--ink);
+	}
+
+	.links__handle {
+		margin-left: auto;
+	}
+
+	@media (max-width: 640px) {
+		.links__handle {
+			display: none;
+		}
 	}
 
 	.tag--ghost {

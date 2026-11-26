@@ -2,7 +2,6 @@
 import AboutWindow from '@/components/night/AboutWindow.astro';
 import BottleMail from '@/components/night/BottleMail.astro';
 import Hero from '@/components/night/Hero.astro';
-import LinksWindow from '@/components/night/LinksWindow.astro';
 import Marquee from '@/components/night/Marquee.astro';
 import MutualLinksWindow from '@/components/night/MutualLinksWindow.astro';
 import WaterGlints from '@/components/night/WaterGlints.astro';
@@ -23,7 +22,6 @@ const works = await fetchPinnedWorks(profile.handle, githubToken);
 	<main id="main" class="page">
 		<WaterGlints />
 		<AboutWindow />
-		<LinksWindow />
 		<WorksWindow works={works} />
 		<BottleMail />
 		<MutualLinksWindow />
