@@ -12,3 +12,8 @@ export const topSections: PageSection[] = [
 	{ id: 'links', label: 'Links' },
 ];
 
+export const linksSections: PageSection[] = [
+	{ id: 'cross-links', label: 'Links' },
+	{ id: 'linking-info', label: '相互リンクする方へ' },
+	{ id: 'icon-and-banners', label: 'アイコン・バナー' },
+];

@@ -1,9 +1,9 @@
 ---
 import AboutWindow from '@/components/night/AboutWindow.astro';
 import BottleMail from '@/components/night/BottleMail.astro';
+import CrossLinksWindow from '@/components/night/CrossLinksWindow.astro';
 import Hero from '@/components/night/Hero.astro';
 import Marquee from '@/components/night/Marquee.astro';
-import MutualLinksWindow from '@/components/night/MutualLinksWindow.astro';
 import WaterGlints from '@/components/night/WaterGlints.astro';
 import WorksWindow from '@/components/night/WorksWindow.astro';
 import NightLayout from '@/layouts/NightLayout.astro';
@@ -16,7 +16,7 @@ const githubToken = Astro.locals.runtime?.env?.GITHUB_TOKEN;
 const works = await fetchPinnedWorks(profile.handle, githubToken);
 ---
 
-<NightLayout lang="ja" path="/" title={`${profile.nameLatin} (${profile.name})`} sections={topSections} description={profile.bio}>
+<NightLayout lang="ja" path="/" title={profile.siteName} sections={topSections} description={profile.bio}>
 	<Hero />
 	<Marquee messages={profile.messages} />
 
@@ -25,7 +25,7 @@ const works = await fetchPinnedWorks(profile.handle, githubToken);
 		<AboutWindow />
 		<WorksWindow works={works} />
 		<BottleMail />
-		<MutualLinksWindow />
+		<CrossLinksWindow />
 	</main>
 
 	<Fragment slot="footer-links">

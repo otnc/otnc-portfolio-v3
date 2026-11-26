@@ -1,0 +1,16 @@
+---
+import LinkingInfo from '@/components/night/LinkingInfo.astro';
+import Window from '@/components/night/Window.astro';
+---
+
+<Window id="links" title="links.txt" class="window--right">
+	<h2>Links</h2>
+	<p class="more"><a class="pixel-button" href="/links">相互リンク一覧</a></p>
+	<LinkingInfo />
+</Window>
+
+<style>
+	.more {
+		margin-top: 8px;
+	}
+</style>

@@ -8,10 +8,11 @@ Astro 7 を SSR (`output: 'server'`) で動かし、Cloudflare Pages に置い�
 src/
 ├── pages/
 │   ├── index.astro          トップ。部品を並べるだけ
+│   ├── links.astro          相互リンクの一覧と、相互リンクする方への情報
 │   ├── 404.astro            見つからないページ (montblank.fun と同じ形)
 │   └── ca/index.astro       カタルーニャ語ページ (独立)
 ├── layouts/
-│   └── NightLayout.astro    <head>、ヘッダー、海の段の凸凹、砂浜のフッター、共通スクリプト
+│   └── NightLayout.astro    <head>、ヘッダー、トップ以外の Home ボタン、海の段の凸凹、砂浜のフッター、共通スクリプト
 ├── components/
 │   ├── night/               夜の海の部品
 │   │   ├── SiteHeader.astro     画面上部に固定するヘッダー。ロゴ (トップへ)、Links、そのページのセクションへ飛ぶメニュー
@@ -20,7 +21,8 @@ src/
 │   │   ├── AboutWindow.astro    自己紹介、アカウント (SNS)、支援
 │   │   ├── WorksWindow.astro    作品 (GitHub pinned)
 │   │   ├── BottleMail.astro     まろん｡への入口
-│   │   ├── MutualLinksWindow.astro  相互リンク先と、このサイトのバナー
+│   │   ├── CrossLinksWindow.astro  /links への入口と、相互リンクする方への情報
+│   │   ├── LinkingInfo.astro    相互リンクする方への情報 (名前、サイト名、URL とコピーボタン) とアイコン・バナー。トップと /links で使う
 │   │   ├── Window.astro         ウィンドウ枠と開くアニメーション
 │   │   ├── NightSky.astro / MoonReflection.astro / WaterGlints.astro
 │   │   └── Shoreline.astro      波打ち際
@@ -33,7 +35,7 @@ src/
 │   ├── birthday-fireworks.ts 誕生日 (11月2日、日本時間) だけ上がるドット絵の花火
 │   └── typewriter.ts        1文字ずつ打ち込む
 ├── data/
-│   ├── profile.ts           名前、自己紹介、アカウント、支援などの文言
+│   ├── profile.ts           名前、自己紹介、アカウント、支援、相互リンクなどの文言
 │   ├── sections.ts          ヘッダーのメニューに出す、ページごとのセクションと id
 │   └── pixel-icons.ts       ドット絵のデータ
 ├── lib/
@@ -64,7 +66,7 @@ scripts/build-images.mjs     サムネイル (OGP 画像)、相互リンク用�
 
 ### 相互リンクを足す
 
-`src/data/profile.ts` の `mutualLinks` に `{ name, url }` を足します。作者名を出すときは `author` も付けます。相手のバナーを出すときは `banner: { src, width, height }` も付けます。一覧が空のあいだは "まだありません" と表示されます。
+`src/data/profile.ts` の `crossLinks` に `{ author, url, image }` を足します。一覧は `/links` に出ます。`image` には相手のサイトの画像の URL をそのまま書きます。相手が相互リンク用のバナーを用意していればバナー、なければ OGP 画像かページ内のアイコンを使います。画像の大きさは書かなくてよく、読み込んだときに横長 (幅が高さの1.5倍より大きい) ならバナー、そうでなければアイコンとして並べます。足す前に、相手のサイトの相互リンクのページなどで直リンクが禁止されていないかを確かめます。
 
 ### アカウントを足す
 

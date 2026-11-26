@@ -2,7 +2,7 @@
 /**
  * Shared frame for the night-sea pages: <head>, global styles, the wavy band edges and the beach footer.
  * Pages put their sections in the default slot and their footer links in the `footer-links` slot.
- * Every page gets the fixed header.
+ * Every page gets the fixed header, and every page but the top a Home button above its window.
  */
 import '@/styles/pixelmplus.css';
 import '@/styles/night.css';
@@ -66,6 +66,13 @@ const ogLocale: Record<string, string> = { ja: 'ja_JP', ca: 'ca_ES' };
 		</div>
 
 		<div class="site">
+			{
+				path !== '/' && (
+					<nav class="home-nav" aria-label="Page">
+						<a class="pixel-button" href="/">Home</a>
+					</nav>
+				)
+			}
 			<slot />
 
 			<footer class="footer">
@@ -93,6 +100,14 @@ const ogLocale: Record<string, string> = { ja: 'ja_JP', ca: 'ca_ES' };
 	.site {
 		position: relative;
 		padding-top: var(--header-height);
+	}
+
+	/* Every page but the top has no hero, so the way back sits above its window, on the column's left edge. */
+	.home-nav {
+		position: absolute;
+		top: calc(var(--header-height) + 48px);
+		left: max(var(--page-gutter), calc(50% - 504px));
+		z-index: 2;
 	}
 
 	.sea-edges {

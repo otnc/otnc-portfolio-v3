@@ -5,13 +5,12 @@ import NightLayout from '@/layouts/NightLayout.astro';
 import { profile } from '@/data/profile';
 ---
 
-<NightLayout lang="ja" path="/404" title={`404 - ${profile.nameLatin} (${profile.name})`} description="ページが見つかりませんでした。">
+<NightLayout lang="ja" path="/404" title={`404 - ${profile.siteName}`} description="ページが見つかりませんでした。">
 	<main id="main" class="page not-found">
 		<WaterGlints />
 		<Window title="404.txt">
 			<h1>404</h1>
 			<p>ページが見つかりませんでした。</p>
-			<p class="not-found__back"><a class="pixel-button" href="/">Home</a></p>
 		</Window>
 	</main>
 </NightLayout>
@@ -21,9 +20,5 @@ import { profile } from '@/data/profile';
 		min-height: 60vh;
 		padding-top: 160px;
 		padding-bottom: 96px;
-	}
-
-	.not-found__back {
-		margin-top: 16px;
 	}
 </style>

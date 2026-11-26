@@ -15,6 +15,7 @@ export interface Account extends LinkItem {
 export const profile = {
 	name: '音猫｡',
 	nameLatin: 'otoneko.',
+	siteName: 'otoneko. (音猫｡)',
 	handle: 'otnc',
 	twitter: '@rin_pineapple',
 	avatar: '/avatar.png',
@@ -55,13 +56,15 @@ export const supports: LinkItem[] = [
 	{ label: 'Ko-fi', handle: 'E1E41LY2C9', url: 'https://ko-fi.com/E1E41LY2C9' },
 ];
 
-export interface MutualLink {
-	name: string;
-	author?: string;
+export interface CrossLink {
+	author: string;
 	url: string;
-	/** Their banner image, shown instead of the name when given. */
-	banner?: { src: string; width: number; height: number };
+	/**
+	 * Their banner if they offer one, otherwise their OGP image or icon, loaded straight from their site so it follows their updates.
+	 * Its size is not written down: /links tells a wide banner from an icon once it has loaded.
+	 */
+	image?: string;
 }
 
-// Sites that link back here. Add an entry to list a new partner in the mutual links window.
-export const mutualLinks: MutualLink[] = [{ name: "Np's pages", author: 'Np', url: 'https://negapainter.work' }];
+// Sites that link back here, listed on /links. None of them forbids hotlinking (checked 2026/11).
+export const crossLinks: CrossLink[] = [{ author: 'Np', url: 'https://negapainter.work', image: 'https://negapainter.work/ogp.png' }];
