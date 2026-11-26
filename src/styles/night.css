@@ -28,6 +28,8 @@
 	--sand-wet: #26243a;
 	/* Shared size of one pixel-art dot for icons, sprites, stars and waves. */
 	--dot: 3px;
+	/* Side margin of the page column; wider on phones, where a swipe that starts on a window is hard to tell from one meant for the page. */
+	--page-gutter: 16px;
 	/* Horizontal position of the moon, shared by the sky, its reflection and the beach sparkles. */
 	--moon-right: 14%;
 	--font-body: 'PixelMplus10', 'PixelMplus10 Extra', monospace;
@@ -271,7 +273,7 @@ a:visited {
 	gap: 96px;
 	max-width: 1040px;
 	margin: 0 auto;
-	padding: 96px 16px 64px;
+	padding: 96px var(--page-gutter) 64px;
 }
 
 .page .window--left {
@@ -285,6 +287,7 @@ a:visited {
 @media (max-width: 640px) {
 	:root {
 		--moon-right: 16px;
+		--page-gutter: 40px;
 	}
 
 	h1 {
