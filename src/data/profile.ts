@@ -15,7 +15,7 @@ export interface Account extends LinkItem {
 export const profile = {
 	name: '音猫｡',
 	nameLatin: 'otoneko.',
-	siteName: 'otoneko. (音猫｡)',
+	siteName: '音猫｡のホームページ',
 	handle: 'otnc',
 	twitter: '@rin_pineapple',
 	avatar: '/avatar.png',
