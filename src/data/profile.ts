@@ -31,7 +31,7 @@ export const profile = {
 		'大学・日常・技術の話は別のほうで',
 		'ゆっくりしていってね',
 	],
-	roles: ['ネタ駆動開発', 'フルスタック?な開発者', 'おもしろOSS開発者', 'OSSコントリビューター', '開発者コミュニティのスタッフ'],
+	roles: ['ネタ駆動開発', 'ハーフスタック?な開発者', 'おもしろOSS開発者', 'OSSコントリビューター', '開発者コミュニティのスタッフ'],
 	bio: 'ネタ駆動で開発しています。npm パッケージ、ブラウザ拡張、VS Code 拡張、Discord Bot など、便利なものから、使い道のないただの一発ネタまで作っています。',
 	skills: ['JavaScript', 'TypeScript', 'HTML', 'CSS', 'CoffeeScript', 'Python', 'Ruby', 'Go', 'React', 'Node.js', 'Astro', 'Svelte'],
 	lab: { name: 'Oto Lab', role: '個人の開発用 Organization', url: 'https://github.com/oto-lab' },
