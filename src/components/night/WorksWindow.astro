@@ -11,7 +11,7 @@ interface Props {
 const { works } = Astro.props;
 ---
 
-<Window title={`/${profile.handle}/works/`} class="window--left">
+<Window id="works" title={`/${profile.handle}/works/`} class="window--left">
 	<h2>Works</h2>
 	{
 		works.length === 0 && (

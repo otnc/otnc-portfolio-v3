@@ -11,9 +11,10 @@ src/
 │   ├── 404.astro            見つからないページ (montblank.fun と同じ形)
 │   └── ca/index.astro       カタルーニャ語ページ (独立)
 ├── layouts/
-│   └── NightLayout.astro    <head>、海の段の凸凹、砂浜のフッター、共通スクリプト
+│   └── NightLayout.astro    <head>、ヘッダー、海の段の凸凹、砂浜のフッター、共通スクリプト
 ├── components/
 │   ├── night/               夜の海の部品
+│   │   ├── SiteHeader.astro     画面上部に固定するヘッダー。ロゴ (トップへ)、Links、そのページのセクションへ飛ぶメニュー
 │   │   ├── Hero.astro           夜空、アイコン、名前、キャッチコピー
 │   │   ├── Marquee.astro        流れるメッセージ
 │   │   ├── AboutWindow.astro    自己紹介、アカウント (SNS)、支援
@@ -33,6 +34,7 @@ src/
 │   └── typewriter.ts        1文字ずつ打ち込む
 ├── data/
 │   ├── profile.ts           名前、自己紹介、アカウント、支援などの文言
+│   ├── sections.ts          ヘッダーのメニューに出す、ページごとのセクションと id
 │   └── pixel-icons.ts       ドット絵のデータ
 ├── lib/
 │   ├── github.ts            pinned リポジトリと Website 欄の取得
@@ -44,6 +46,8 @@ src/
 └── env.d.ts                 Pages の環境変数の型
 public/
 ├── _routes.json             Worker を通すパス (静的ファイルは通さない)
+├── avatar.png               アイコン
+├── logo.png                 ロゴ (ヘッダー)。otnc/my-logos の otoneko/logo.png の余白を切り取ったもの
 └── pixel/                   波、泡の線、カニ、貝殻などの SVG
 fonts/pixelmplus/            フォントの元ファイルとライセンス
 scripts/build-fonts.mjs      フォントのサブセット生成
@@ -72,6 +76,7 @@ scripts/build-images.mjs     サムネイル (OGP 画像)、相互リンク用�
 1. `src/components/night/` に部品を作り、中身を `Window` で包みます。`class="window--left"` か `window--right` で左右に少しずらします。
 2. 部品のスタイルはその `.astro` の `<style>` に書きます。
 3. `src/pages/index.astro` の `<main>` に並べます。
+4. `src/data/sections.ts` の `topSections` に `{ id, label }` を足し、`Window` に同じ `id` を渡します。ヘッダーのメニューに出て、`#id` で飛べるようになります。
 
 ### ドット絵のスプライトを足す
 

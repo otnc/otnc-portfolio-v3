@@ -1,15 +1,17 @@
 ---
 interface Props {
 	title: string;
+	/** Anchor for the header menu (see src/data/sections.ts). */
+	id?: string;
 	class?: string;
 	/** Drops the body padding, e.g. for an image that should touch the frame. */
 	flush?: boolean;
 }
 
-const { title, class: className, flush = false } = Astro.props;
+const { title, id, class: className, flush = false } = Astro.props;
 ---
 
-<div class:list={['window-shell', className]} data-reveal>
+<div id={id} class:list={['window-shell', className]} data-reveal>
 	<span class="window-zoom" aria-hidden="true"></span>
 	<span class="window-zoom window-zoom--trail" aria-hidden="true"></span>
 	<section class="window">

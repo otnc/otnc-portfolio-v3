@@ -2,11 +2,14 @@
 /**
  * Shared frame for the night-sea pages: <head>, global styles, the wavy band edges and the beach footer.
  * Pages put their sections in the default slot and their footer links in the `footer-links` slot.
+ * Every page gets the fixed header.
  */
 import '@/styles/pixelmplus.css';
 import '@/styles/night.css';
 import Shoreline from '@/components/night/Shoreline.astro';
+import SiteHeader from '@/components/night/SiteHeader.astro';
 import { SITE_ORIGIN, profile } from '@/data/profile';
+import type { PageSection } from '@/data/sections';
 
 interface Props {
 	lang: string;
@@ -15,9 +18,11 @@ interface Props {
 	/** Path of this page, used for the canonical URL. */
 	path: string;
 	skipLinkLabel?: string;
+	/** Places on this page for the header menu; the menu is left out without them. */
+	sections?: PageSection[];
 }
 
-const { lang, title, description, path, skipLinkLabel = '本文へ' } = Astro.props;
+const { lang, title, description, path, skipLinkLabel = '本文へ', sections } = Astro.props;
 const url = `${SITE_ORIGIN}${path}`;
 const ogLocale: Record<string, string> = { ja: 'ja_JP', ca: 'ca_ES' };
 ---
@@ -51,6 +56,7 @@ const ogLocale: Record<string, string> = { ja: 'ja_JP', ca: 'ca_ES' };
 	</head>
 	<body>
 		<a class="skip-link" href="#main">{skipLinkLabel}</a>
+		<SiteHeader sections={sections} />
 
 		<!-- Wavy edges over the body background's hard colour stops (30% / 55% / 80%). -->
 		<div class="sea-edges" aria-hidden="true">
@@ -83,6 +89,12 @@ const ogLocale: Record<string, string> = { ja: 'ja_JP', ca: 'ca_ES' };
 </html>
 
 <style>
+	/* Room for the fixed header, so the top of the hero or the first window is not hidden under it. */
+	.site {
+		position: relative;
+		padding-top: var(--header-height);
+	}
+
 	.sea-edges {
 		position: absolute;
 		inset: 0;

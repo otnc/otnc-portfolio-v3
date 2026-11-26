@@ -30,6 +30,7 @@
 	--dot: 3px;
 	/* Side margin of the page column; wider on phones, where a swipe that starts on a window is hard to tell from one meant for the page. */
 	--page-gutter: 16px;
+	--header-height: 54px;
 	/* Horizontal position of the moon, shared by the sky, its reflection and the beach sparkles. */
 	--moon-right: 14%;
 	--font-body: 'PixelMplus10', 'PixelMplus10 Extra', monospace;
@@ -45,6 +46,8 @@
 
 html {
 	scroll-behavior: smooth;
+	/* Keeps a section the header menu jumps to, or anything focused, clear of the fixed header. */
+	scroll-padding-top: calc(var(--header-height) + 24px);
 }
 
 body {
@@ -130,7 +133,7 @@ a:visited {
 .skip-link:focus {
 	left: 16px;
 	top: 16px;
-	z-index: 10;
+	z-index: 30;
 	padding: 0 8px;
 	background: var(--moon);
 	color: var(--ink);
