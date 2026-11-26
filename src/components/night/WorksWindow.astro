@@ -11,8 +11,8 @@ interface Props {
 const { works } = Astro.props;
 ---
 
-<Window title={`/otnc/works/ (${works.length} 個の項目)`} class="window--left">
-	<h2>作品</h2>
+<Window title={`/${profile.handle}/works/`} class="window--left">
+	<h2>Works</h2>
 	{
 		works.length === 0 && (
 			<p class="muted">
